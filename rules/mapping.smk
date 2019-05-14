@@ -17,7 +17,7 @@ rule minimap2:
         "minimap2 -x map-ont --max-qlen 1000 {input.index} {input.fastq} > {output}"
 #Per orf, need to mod, Could also do this with blast- more accurate?
 #Do we want to do this per orf or with a sliding window? Best for recombination?
-rule find_best_genotype: 
+rule best_reference: 
     input:
         paf="pipeline_output/mapped_reads/{barcode}.paf",
         ref="references/initial_record_set.fasta"
