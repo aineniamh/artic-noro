@@ -8,17 +8,18 @@ rule minimap2_index:
 
 rule minimap2:
     input:
-        fastq="trimmed/{barcode}.fastq",
+        fastq="pipeline_output/demultiplexed/{barcode}.fastq",
         index="references/initial_record_set.mmi"
     output:
-        "mapped_reads/{barcode}.paf"
+        "pipeline_output/mapped_reads/{barcode}.paf"
     threads: 4
     shell:
         "minimap2 -x map-ont --max-qlen 1000 {input.index} {input.fastq} > {output}"
-
-rule find_best_genotype: #Per orf, need to mod
+#Per orf, need to mod, Could also do this with blast- more accurate?
+#Do we want to do this per orf or with a sliding window? Best for recombination?
+rule find_best_genotype: 
     input:
-        paf="mapped_reads/{barcode}.paf",
+        paf="pipeline_output/mapped_reads/{barcode}.paf",
         ref="references/initial_record_set.fasta"
     output:
         fasta="references/{barcode}.fasta"
@@ -38,13 +39,13 @@ rule find_best_genotype: #Per orf, need to mod
             if record.id==top:
                 with open(fasta,"w") as fw:
                     SeqIO.write(record,fw,"fasta")
-                
+
 rule minimap_to_genotype:
     input:
-        fastq="trimmed/{barcode}.fastq",
+        fastq="pipeline_output/demultiplexed/{barcode}.fastq",
         ref="references/{barcode}.fasta"
     output:
-        "best_ref_mapped_reads/{barcode}.sam"
+        "pipeline_output/best_ref_mapped_reads/{barcode}.sam"
     threads: 4
     shell:
         "minimap2 -ax map-ont --max-qlen 1000 {input.ref} {input.fastq} > {output}"       

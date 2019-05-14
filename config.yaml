@@ -1,3 +1,11 @@
+run_name: noro_GOSH_2k
+path_to_fastq: /Volumes/aine_store/
+path_to_fast5: /Volumes/aine_store/
+reference_file: references/genes.fasta
+primer_scheme_dir: primer-schemes
+primer_scheme_version: PV/V1
+min_length: 200
+max_length: 2500
 barcodes:
     BC01: BC01
     BC02: BC02
@@ -11,6 +19,9 @@ barcodes:
     BC10: BC10
     BC11: BC11
     BC12: BC12
+ORFS:
+  ORF1: ORF1
+  ORF2: ORF2
 
 
 
