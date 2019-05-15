@@ -1,18 +1,11 @@
-# def get_input(wildcards):
-#     barcode= lambda wildcards : config["barcodes"]
-#     return run_name + "-{barcode}.fastq"
-
 rule minion:
     input:
-        read_file = run_name + "_all-{barcode}.fastq",
-        nano_read_file = run_name + "_all.fastq",
-        fai= run_name+"_all.fastq.index.fai",
-        gzi= run_name+"_all.fastq.index.gzi",
-        readdb= run_name+"_all.fastq.index.readdb",
-        index=run_name+"_all.fastq.index"
+        read_file = "pipeline_output/demultiplexed/{barcode}.fastq",
+        nano_read_file = "pipeline_output/"+run_name + "_all.fastq",
+        index="pipeline_output/"+run_name+"_all.fastq.index"
     params:
         primer_scheme = lambda wildcards : config["primer_scheme_dir"],
-        primer_version = lambda wildcards : config["primer_scheme_version"]
+        primer_version = "V_{barcode}"
     threads:
         8
     output:

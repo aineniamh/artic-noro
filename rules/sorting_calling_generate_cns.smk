@@ -73,9 +73,3 @@ rule rename_consensus:
                 for record in SeqIO.parse(input_fasta,"fasta"):
                     new_id = input_fasta.rstrip(".cns.fasta").lstrip("pipeline_output/temp_consensus/") + "|" + record.id
                     fw.write(">{}\n{}\n".format(new_id, record.seq))
-
-# rule generate_pseudo_bed:
-#     input:
-#         bed=
-#         cns=
-
