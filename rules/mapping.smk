@@ -18,14 +18,14 @@ rule minimap2:
 
 #Per orf, need to mod, Could also do this with blast- more accurate?
 #Do we want to do this per orf or with a sliding window? Best for recombination?
-rule id_top_ref_make_bed: 
+rule find_top_reference: 
     input:
         paf="pipeline_output/mapped_reads/{barcode}.paf",
         ref="primer-schemes/noro2kb/V1/noro2kb.reference.fasta",
         bed='primer-schemes/noro2kb/V1/noro2kb.scheme.bed'
     output:
-        fasta="primer-schemes/noro2kb/Vsep/{barcode}.fasta",
-        bed='primer-schemes/noro2kb/Vsep/{barcode}.scheme.bed'
+        fasta="primer-schemes/noro2kb/V_{barcode}/{barcode}.reference.fasta",
+        bed='primer-schemes/noro2kb/V_{barcode}/{barcode}.scheme.bed'
     run:
         paf=str(input.paf)
         ref=str(input.ref)
@@ -60,7 +60,7 @@ rule id_top_ref_make_bed:
                     SeqIO.write(record,fw,"fasta")
 
 
-rule minimap_to_genotype:
+rule minimap_to_top_reference:
     input:
         fastq="pipeline_output/demultiplexed/{barcode}.fastq",
         ref="primer-schemes/noro2kb/Vsep/{barcode}.fasta"

@@ -60,3 +60,17 @@ snakemake --cores X
 
 where X is the number of threads you wish to run.
 
+# pipeline description
+
+1. gather \
+Parses all of the basecalled fastq files from ``guppy``, applies a length filter that can be customised in the ``config.yaml`` file and writes the reads to a single file ``run_name_all.fastq``. This script also searches the fastq directories for ``sequencing_summary`` files and combines them into a single file: ``run_name_sequencing_summary.txt``. These files will be output in the ``pipeline_output`` directory. 
+2. demultiplex_qcat \
+For each read in the ``run_name_all.fastq`` file, identifies barcodes and outputs reads into respective files, binned by barcode. These files appear in the ``demultiplexed`` directory, in ``pipeline_output``.
+3. minimap2_index \
+Indexes a panel of reference sequences for minimap2.
+4. minimap2 \
+For each barcode, maps the reads against the panel of reference sequences and produces a ``.paf`` file. 
+5. find_top_reference \ 
+For each ``barcode``, identifies the reference with the greatest number of reads mapping to it and creates a new reference file ``primer-schemes/noro2kb/V_barcode/barcode.reference.fasta`` and a new bed file ``primer-schemes/noro2kb/V_barcode/barcode.scheme.bed``.
+6. minimap_to_top_reference \
+Re-maps the reads for each demultiplexed file against their respective top reference and outputs a sam file in ``pipeline_output/best_ref_mapped_reads/``. 

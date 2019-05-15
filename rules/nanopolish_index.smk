@@ -12,6 +12,4 @@ rule nanopolish_index:
     shell:
         "nanopolish index -d {params.path_to_fast5} -s {input.summary} {input.reads}"
 
-#-s {input.summary} not working with nanopolish right now. Doesn't identify filename_fastq
-
 
