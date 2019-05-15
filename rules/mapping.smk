@@ -1,49 +1,69 @@
 rule minimap2_index:
     input:
-        "references/initial_record_set.fasta"
+        "primer-schemes/noro2kb/V1/noro2kb.reference.fasta"
     output:
-        "references/initial_record_set.mmi"
+        "primer-schemes/noro2kb/V1/noro2kb.reference.fasta.mmi"
     shell:
         "minimap2 -d {output} {input}"
 
 rule minimap2:
     input:
         fastq="pipeline_output/demultiplexed/{barcode}.fastq",
-        index="references/initial_record_set.mmi"
+        index="primer-schemes/noro2kb/V1/noro2kb.reference.fasta.mmi"
     output:
         "pipeline_output/mapped_reads/{barcode}.paf"
     threads: 4
     shell:
-        "minimap2 -x map-ont --max-qlen 1000 {input.index} {input.fastq} > {output}"
+        "minimap2 -x map-ont --max-qlen 1000 --secondary=no {input.index} {input.fastq} > {output}"
+
 #Per orf, need to mod, Could also do this with blast- more accurate?
 #Do we want to do this per orf or with a sliding window? Best for recombination?
-rule best_reference: 
+rule id_top_ref_make_bed: 
     input:
         paf="pipeline_output/mapped_reads/{barcode}.paf",
-        ref="references/initial_record_set.fasta"
+        ref="primer-schemes/noro2kb/V1/noro2kb.reference.fasta",
+        bed='primer-schemes/noro2kb/V1/noro2kb.scheme.bed'
     output:
-        fasta="references/{barcode}.fasta"
+        fasta="primer-schemes/noro2kb/Vsep/{barcode}.fasta",
+        bed='primer-schemes/noro2kb/Vsep/{barcode}.scheme.bed'
     run:
         paf=str(input.paf)
         ref=str(input.ref)
+        bed=str(input.bed)
+
         fasta=str(output.fasta)
+        bed_out=str(output.bed)
+
         genotypes=collections.Counter()
         c = 0
         with open(paf,"r") as f:
             for l in f:
+                c+=1
                 tokens=l.rstrip('\n').split()
                 genotypes[tokens[5]]+=1
         top=genotypes.most_common(1)[0][0]
-        print(top)
+        top_count=genotypes.most_common(1)[0][1]
+        print("The top reference hitting for file {} is {} with {} reads mapped ({} pcent of reads).".format(paf, top, top_count, 100*(top_count/c)))
+
+        with open(bed_out, "w") as fw:
+            print(bed_out)
+            with open(bed, "r") as f:
+                for l in f:
+                    tokens=l.rstrip('\n').split()
+                    print(tokens[0], top)
+                    if top==tokens[0]:
+                        fw.write(l.rstrip('\n')+ '\n')
+
         for record in SeqIO.parse(ref,"fasta"):
             if record.id==top:
                 with open(fasta,"w") as fw:
                     SeqIO.write(record,fw,"fasta")
 
+
 rule minimap_to_genotype:
     input:
         fastq="pipeline_output/demultiplexed/{barcode}.fastq",
-        ref="references/{barcode}.fasta"
+        ref="primer-schemes/noro2kb/Vsep/{barcode}.fasta"
     output:
         "pipeline_output/best_ref_mapped_reads/{barcode}.sam"
     threads: 4

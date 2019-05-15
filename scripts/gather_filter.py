@@ -12,15 +12,16 @@ parser.add_argument("--min-length", action="store", type=int, dest="min_length")
 parser.add_argument("--max-length", action="store", type=int, dest="max_length")
 parser.add_argument("--run-name", action="store", type=str, dest="run_name")
 parser.add_argument("--path-to-fastq", action="store", type=str, dest="path_to_fastq")
-
+parser.add_argument("--output-dir", action="store", type=str, dest="output_dir")
 params = parser.parse_args()
 
-directory = params.path_to_fastq
+directory=params.path_to_fastq
 run_name=params.run_name
 min_length=params.min_length
 max_length=params.max_length
+output_dir=params.output_dir
 
-all_fastq_outfn = "{}_all.fastq".format(run_name)
+all_fastq_outfn = "{}/{}_all.fastq".format(output_dir,run_name)
 all_fastq_outfh = open(all_fastq_outfn, "w")
 
 fastq = defaultdict(list)
@@ -58,7 +59,7 @@ print("Collecting summary files\n", file=sys.stderr)
 
 dfs = []
 
-summary_outfn = "{}_sequencing_summary.txt".format(run_name)
+summary_outfn = "{}/{}_sequencing_summary.txt".format(output_dir,run_name)
 summaryfh = open(summary_outfn, "w")
 
 for r, d, f in os.walk(directory):
@@ -70,5 +71,3 @@ for r, d, f in os.walk(directory):
             dfs.append(df)
 pd.concat(dfs).to_csv(summaryfh, sep="\t", index=False)
 summaryfh.close()
-
-

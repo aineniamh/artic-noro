@@ -17,7 +17,7 @@ rule samtools_index:
 
 rule bcftools_call:
     input:
-        fasta="references/{barcode}.fasta",
+        fasta="primer-schemes/noro2kb/Vsep/{barcode}.fasta",
         bam="pipeline_output/sorted_reads/{barcode}.bam",
         bai="pipeline_output/sorted_reads/{barcode}.bam.bai"
     output:
@@ -36,7 +36,7 @@ rule index_calls:
 
 rule normalise_indels:
     input:
-        fasta="references/{barcode}.fasta",
+        fasta="primer-schemes/noro2kb/Vsep/{barcode}.fasta",
         csi="pipeline_output/calls/{barcode}.bcf.gz.csi",
         bcf="pipeline_output/calls/{barcode}.bcf.gz"
     output:
@@ -54,7 +54,7 @@ rule index_norm:
 
 rule generate_consensus:
     input:
-        fasta="references/{barcode}.fasta",
+        fasta="primer-schemes/noro2kb/Vsep/{barcode}.fasta",
         bcf="pipeline_output/indel_normalised/{barcode}.norm.bcf.gz",
         csi="pipeline_output/indel_normalised/{barcode}.norm.bcf.gz.csi"
     output:

@@ -6,7 +6,7 @@ rule demultiplex_qcat:
         report="pipeline_output/demultiplexed/demultiplex_report.txt"
     threads: 16
     shell:
-        "qcat -f {input.reads} -b demultiplexed -t 16 -q 80 > {output.report}"
+        "qcat -f {input.reads} -b pipeline_output/demultiplexed -t 16 -q 80 > {output.report}"
 
 # rule demultiplex_porechop:
 #     input:
