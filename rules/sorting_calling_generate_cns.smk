@@ -52,24 +52,23 @@ rule index_norm:
     shell:
         "bcftools index {input}"
 
-rule generate_consensus:
+rule generate_quick_consensus:
     input:
         fasta="primer-schemes/noro2kb/Vsep/{barcode}.fasta",
         bcf="pipeline_output/indel_normalised/{barcode}.norm.bcf.gz",
         csi="pipeline_output/indel_normalised/{barcode}.norm.bcf.gz.csi"
     output:
-        "pipeline_output/temp_consensus/{barcode}.cns.fasta"
+        "pipeline_output/consensus/{barcode}.cns.fasta"
     shell:
         "cat {input.fasta} | bcftools consensus {input.bcf} > {output}"
 
-rule rename_consensus:
+rule quick_consensus_as_new_reference:
     input:
-        "pipeline_output/temp_consensus/{barcode}.cns.fasta"
-    output:
         "pipeline_output/consensus/{barcode}.cns.fasta"
+    output:
+        "primer-schemes/noro2kb/V_{barcode}/V1/V_{barcode}.reference.fasta"
     run:
         for input_fasta in input:
             with open(str(output),"w") as fw:
                 for record in SeqIO.parse(input_fasta,"fasta"):
-                    new_id = input_fasta.rstrip(".cns.fasta").lstrip("pipeline_output/temp_consensus/") + "|" + record.id
-                    fw.write(">{}\n{}\n".format(new_id, record.seq))
+                    fw.write(">{}\n{}\n".format(record.id, record.seq))

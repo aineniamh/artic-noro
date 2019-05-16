@@ -1,4 +1,4 @@
-rule minion:
+rule artic_minion:
     input:
         read_file = "pipeline_output/demultiplexed/{barcode}.fastq",
         nano_read_file = "pipeline_output/"+run_name + "_all.fastq",

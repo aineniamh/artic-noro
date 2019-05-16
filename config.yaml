@@ -2,8 +2,8 @@ run_name: noro_GOSH_2k
 path_to_fastq: /Volumes/aine_store/GOSH_fastq
 path_to_fast5: /Volumes/aine_store/fast5_1_100
 reference_file: references/genes.fasta
-primer_scheme_dir: primer-schemes
-primer_scheme_version: noro2kb/V1
+primer_scheme_dir: primer-schemes/noro2kb
+primer_scheme_version: V1
 min_length: 200
 max_length: 2500
 barcodes:

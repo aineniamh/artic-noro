@@ -24,8 +24,8 @@ rule find_top_reference:
         ref="primer-schemes/noro2kb/V1/noro2kb.reference.fasta",
         bed='primer-schemes/noro2kb/V1/noro2kb.scheme.bed'
     output:
-        fasta="primer-schemes/noro2kb/V_{barcode}/{barcode}.reference.fasta",
-        bed='primer-schemes/noro2kb/V_{barcode}/{barcode}.scheme.bed'
+        fasta="primer-schemes/noro2kb/V_{barcode}/{barcode}.reference.top.fasta",
+        bed='primer-schemes/noro2kb/V_{barcode}/noro2kb.scheme.bed'
     run:
         paf=str(input.paf)
         ref=str(input.ref)
@@ -63,7 +63,7 @@ rule find_top_reference:
 rule minimap_to_top_reference:
     input:
         fastq="pipeline_output/demultiplexed/{barcode}.fastq",
-        ref="primer-schemes/noro2kb/Vsep/{barcode}.fasta"
+        ref="primer-schemes/noro2kb/V_{barcode}/noro2kb.reference.top.fasta"
     output:
         "pipeline_output/best_ref_mapped_reads/{barcode}.sam"
     threads: 4
