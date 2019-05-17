@@ -1,7 +1,7 @@
 rule porechop_custom_barcodes:
     input:
-        reads="demultiplexed/{barcode}.fastq",
-        custom_barcodes="references/noro.primers.csv"
+        reads="pipeline_output/demultiplexed/{barcode}.fastq",
+        custom_barcodes="primer-schemes/noro2kb/V1/noro2kb.scheme.bed"
     output:
         fastq="primer_annotated/{barcode}.fastq",
         report="primer_report.txt"

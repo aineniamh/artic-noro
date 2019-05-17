@@ -1,15 +1,15 @@
 rule minimap2_index:
     input:
-        "primer-schemes/noro2kb/V1/noro2kb.reference.fasta"
+        "references/noro.references.bed.fasta"
     output:
-        "primer-schemes/noro2kb/V1/noro2kb.reference.fasta.mmi"
+        "references/noro.references.bed.fasta.mmi"
     shell:
         "minimap2 -d {output} {input}"
 
 rule minimap2:
     input:
         fastq="pipeline_output/demultiplexed/{barcode}.fastq",
-        index="primer-schemes/noro2kb/V1/noro2kb.reference.fasta.mmi"
+        index="references/noro.references.bed.fasta.mmi"
     output:
         "pipeline_output/mapped_reads/{barcode}.paf"
     threads: 4
@@ -21,51 +21,39 @@ rule minimap2:
 rule find_top_reference: 
     input:
         paf="pipeline_output/mapped_reads/{barcode}.paf",
-        ref="primer-schemes/noro2kb/V1/noro2kb.reference.fasta",
+        ref="references/noro.references.bed.fasta",
         bed='primer-schemes/noro2kb/V1/noro2kb.scheme.bed'
+    params:
+        output_dir="pipeline_output/primer-schemes/noro_quick_cns/V_{barcode}"
     output:
-        fasta="primer-schemes/noro2kb/V_{barcode}/{barcode}.reference.top.fasta",
-        bed='primer-schemes/noro2kb/V_{barcode}/noro2kb.scheme.bed'
-    run:
-        paf=str(input.paf)
-        ref=str(input.ref)
-        bed=str(input.bed)
+        fasta="pipeline_output/primer-schemes/noro_quick_cns/V_{barcode}/noro.reference.top.fasta",
+        bed='pipeline_output/primer-schemes/noro_quick_cns/V_{barcode}/noro_quick_cns.scheme.bed'
+    shell:
+        "python scripts/find_top_reference.py --paf {input.paf} "
+        "--reference {input.ref} --bed {input.bed} "
+        "--output-dir {params.output_dir} --sample {wildcards.barcode} "
 
-        fasta=str(output.fasta)
-        bed_out=str(output.bed)
-
-        genotypes=collections.Counter()
-        c = 0
-        with open(paf,"r") as f:
-            for l in f:
-                c+=1
-                tokens=l.rstrip('\n').split()
-                genotypes[tokens[5]]+=1
-        top=genotypes.most_common(1)[0][0]
-        top_count=genotypes.most_common(1)[0][1]
-        print("The top reference hitting for file {} is {} with {} reads mapped ({} pcent of reads).".format(paf, top, top_count, 100*(top_count/c)))
-
-        with open(bed_out, "w") as fw:
-            print(bed_out)
-            with open(bed, "r") as f:
-                for l in f:
-                    tokens=l.rstrip('\n').split()
-                    print(tokens[0], top)
-                    if top==tokens[0]:
-                        fw.write(l.rstrip('\n')+ '\n')
-
-        for record in SeqIO.parse(ref,"fasta"):
-            if record.id==top:
-                with open(fasta,"w") as fw:
-                    SeqIO.write(record,fw,"fasta")
-
+rule find_top_reference_per_amplicon:
+    input:
+        paf="pipeline_output/mapped_reads/{barcode}.paf",
+        ref="references/noro.references.bed.fasta",
+        bed='primer-schemes/noro2kb/V1/noro2kb.scheme.bed'
+    params:
+        output_dir="pipeline_output/primer-schemes/noro_quick_cns/V_{barcode}"
+    output:
+        fasta="pipeline_output/primer-schemes/noro_quick_cns/V_{barcode}/noro_quick_cns.references.fasta",
+        bed='pipeline_output/primer-schemes/noro_quick_cns/V_{barcode}/noro_quick_cns.schemes.bed'
+    shell:
+        "python scripts/find_top_reference_per_amplicon.py --paf {input.paf} "
+        "--reference {input.ref} --bed {input.bed} "
+        "--output-dir {params.output_dir} --sample {wildcards.barcode} "
 
 rule minimap_to_top_reference:
     input:
         fastq="pipeline_output/demultiplexed/{barcode}.fastq",
-        ref="primer-schemes/noro2kb/V_{barcode}/noro2kb.reference.top.fasta"
+        ref="pipeline_output/primer-schemes/noro_quick_cns/V_{barcode}/noro.reference.top.fasta"
     output:
-        "pipeline_output/best_ref_mapped_reads/{barcode}.sam"
+        "pipeline_output/top_ref_mapped_reads/{barcode}.sam"
     threads: 4
     shell:
         "minimap2 -ax map-ont --max-qlen 1000 {input.ref} {input.fastq} > {output}"       

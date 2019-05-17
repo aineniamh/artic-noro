@@ -86,3 +86,5 @@ The ``artic minion`` pipeline, written by Nick Loman, is then run for each barco
     * Runs ``nanopolish variants`` twice, on the barcode-and-primer-trimmed bam and on the barcode-trimmed bam.
     * Generates a variant frequency plot.
     * Runs ``margin_cons``, a custom script that filters the variants, masking sites that do not reach the depth threshold of 20 and do not reach a quality threshold of 200, and produces a consensus sequence with 'N' masking on the relevant sites. It uses the vcf from nanopolish without primer-trimming but the primer-trimmed bam file so that primer sequences do not count towards depth calculation. A report is also generated.
+10. organise_minion_output \
+Moves artic_minion output files into respective ``pipeline_output/minion_output/barcode`` directories on completion of the pipeline.
