@@ -60,7 +60,7 @@ snakemake --cores X
 
 where X is the number of threads you wish to run.
 
-# pipeline description
+## pipeline description
 
 1. setup ``artic fieldbioinformatics`` package \
 Automatic setup of this on startup of the pipeline. Gives the user access to ``artic minion`` script for step below.
