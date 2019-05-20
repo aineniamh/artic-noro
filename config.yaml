@@ -4,8 +4,8 @@ path_to_fast5: /Volumes/aine_store/fast5_1_100
 reference_file: references/genes.fasta
 primer_scheme_dir: pipeline_output/primer-schemes/noro_quick_cns
 primer_scheme_version: V1
-min_length: 200
-max_length: 2500
+min_length: 500
+max_length: 3000
 barcodes:
     barcode01: barcode01
     # barcode02: barcode02

@@ -31,7 +31,6 @@ rule artic_minion:
         "--nanopolish-read-file {input.nano_read_file} "
         "{params.primer_version} {wildcards.barcode}"
 
-
 rule organise_minion_output:
     input:
         "{barcode}.alignreport.er",

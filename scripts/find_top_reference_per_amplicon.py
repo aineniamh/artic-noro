@@ -8,8 +8,9 @@ import argparse
 parser = argparse.ArgumentParser(description='Gathering and filtering files.')
 parser.add_argument("--paf", action="store", type=str, dest="paf")
 parser.add_argument("--reference", action="store", type=str, dest="reference")
-parser.add_argument("--bed", action="store", type=str, dest="bed")
-parser.add_argument("--output-dir", action="store", type=str, dest="output_dir")
+parser.add_argument("--bed_file", action="store", type=str, dest="bed")
+parser.add_argument("--amplicon_file", action="store", type=str, dest="amp")
+parser.add_argument("--output_dir", action="store", type=str, dest="output_dir")
 parser.add_argument("--sample", action="store", type=str, dest="sample")
 
 args = parser.parse_args()
@@ -23,6 +24,7 @@ args = parser.parse_args()
 paf=str(args.paf)
 ref=str(args.reference)
 bed=str(args.bed)
+amp_file=str(args.amp)
 output_dir=str(args.output_dir)
 sample=str(args.sample)
 print("\n*\nFinding top reference for {}, based on mapping file {}\n*\n".format(sample, paf))
@@ -30,11 +32,46 @@ bed_out = output_dir + '/noro.scheme.bed'
 ref_out = output_dir + '/noro.reference.fasta'
 genotypes=collections.Counter()
 
+#Get what amplicon is where for which ref
+amplicons=collections.defaultdict(dict)
+with open(amp_file,"r") as f:
+    for l in f:
+        if l.startswith("ref"):
+            pass
+        else:
+            tokens=l.rstrip('\n').split(',')
+            reference = tokens[0]
+            amp_name = tokens[1]
+            start = int(tokens[2])
+            end = int(tokens[3])
+
+            amplicons[reference][(start, end)] = amp_name
+            # print(amplicons[reference])
+
+whoami={}
 c = 0
 with open(paf,"r") as f:
     for l in f:
         c+=1
         tokens=l.rstrip('\n').split()
+        
+        hit=tokens[5]
+        start=int(tokens[7])
+        end=int(tokens[8])
+
+        if tokens[4]=='+':
+            read_coords= set(range(start,end))
+        else:
+            read_coords= set(range(end,start))
+        intersecting_amps = []
+        for i in amplicons[hit]:
+            amp_range = list(range(i[0],i[1]))
+            if read_coords.intersection(amp_range):
+                intersecting_amps.append((amplicons[hit][i], len(read_coords.intersection(amp_range))))
+        print(hit,sorted(intersecting_amps, key = lambda x : int(x[1]), reverse=True), start, end)
+        if not intersecting_amps:
+            print(l)
+
         genotypes[tokens[5]]+=1
 top=genotypes.most_common(1)[0][0]
 top_count=genotypes.most_common(1)[0][1]

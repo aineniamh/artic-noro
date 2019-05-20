@@ -39,17 +39,13 @@ for local_dir, fastq in list(fastq.items()):
         total = 0    
         for f in fastq:
             for rec in SeqIO.parse(open(f), "fastq"):
-                if len(rec) > max_length:
-                    continue
-                if len(rec) < min_length:
-                    continue
+                if len(rec) < max_length and len(rec) > min_length:
+                    total += 1
+                    if rec.id not in dups:
+                        SeqIO.write([rec], all_fastq_outfh, "fastq")
 
-                total += 1
-                if rec.id not in dups:
-                    SeqIO.write([rec], all_fastq_outfh, "fastq")
-
-                    dups.add(rec.id)
-                    uniq += 1
+                        dups.add(rec.id)
+                        uniq += 1
 
         print("Processed: {}\t{}".format(total, uniq))
 

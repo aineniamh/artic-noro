@@ -12,8 +12,8 @@ run_name = str(config["run_name"])
 rule all:
     input:
         #expand("pipeline_output/consensus/{barcode}.cns.fasta",barcode=config["barcodes"]),
-        #expand('primer-schemes/noro2kb/Vsep/{barcode}.scheme.bed',barcode=config["barcodes"]),
-        expand("pipeline_output/minion_output/{barcode}/{barcode}.consensus.fasta",barcode=config["barcodes"])
+        expand('pipeline_output/primer-schemes/noro_quick_cns/V_{barcode}/amp.schemes.bed',barcode=config["barcodes"])
+        #expand("pipeline_output/minion_output/{barcode}/{barcode}.consensus.fasta",barcode=config["barcodes"])
 
 
 ##### Modules #####
