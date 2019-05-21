@@ -8,6 +8,10 @@ RNA was extracted from stool samples and reverse transcribed into cDNA. A tiled 
 
 This pipeline starts with the basecalled reads, gathers them together and applies a read length filter. It then demultiplexes them using ``qcat`` and maps them against a panel of references using ``minimap2``. A custom python script identifies the best reference for each barcode and, from there, the reads are mapped, sorted, indexed and variant called using a combination of ``samtools``, ``bcftools``, custom scripts and ``nanopolish``. Custom scripts then collect the information from the variant calls and output summary figures.
 
+## pipeline steps
+
+<img src="https://github.com/aineniamh/artic-noro/blob/master/dag.svg">
+
 ## setup
 
 Although not a requirement, an install of conda will make the setup of this pipeline on your local machine much more streamlined. I have created an ``artic-noro`` conda environment which will allow you to access all the software required for the pipeline to run. To install conda, visit here https://conda.io/docs/user-guide/install/ in a browser. 
