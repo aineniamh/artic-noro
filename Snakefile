@@ -5,7 +5,6 @@ from Bio import SeqIO
 configfile: "config.yaml"
 run_name = str(config["run_name"])
 
-#todo - customise output directory from config 
 
 ##### Target rules #####
 
