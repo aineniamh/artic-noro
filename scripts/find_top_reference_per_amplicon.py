@@ -40,16 +40,17 @@ with open(amp_file,"r") as f:
             pass
         else:
             tokens=l.rstrip('\n').split(',')
-            reference = tokens[0]
-            amp_name = tokens[1]
-            start = int(tokens[2])
-            end = int(tokens[3])
+            reference = tokens[1]
+            amp_name = tokens[0]
+            start = int(tokens[3])
+            end = int(tokens[4])
 
             amplicons[reference][(start, end)] = amp_name
             # print(amplicons[reference])
 
-whoami={}
+amp_reads=collections.defaultdict(list)
 c = 0
+c_long=0
 with open(paf,"r") as f:
     for l in f:
         c+=1
@@ -58,21 +59,30 @@ with open(paf,"r") as f:
         hit=tokens[5]
         start=int(tokens[7])
         end=int(tokens[8])
+    
+        span = end-start
 
-        if tokens[4]=='+':
+        if span > 1000:
+            c_long +=1
             read_coords= set(range(start,end))
-        else:
-            read_coords= set(range(end,start))
-        intersecting_amps = []
-        for i in amplicons[hit]:
-            amp_range = list(range(i[0],i[1]))
-            if read_coords.intersection(amp_range):
-                intersecting_amps.append((amplicons[hit][i], len(read_coords.intersection(amp_range))))
-        print(hit,sorted(intersecting_amps, key = lambda x : int(x[1]), reverse=True), start, end)
-        if not intersecting_amps:
-            print(l)
+            genotypes[tokens[5]]+=1
+            intersecting_amps = []
+            for i in amplicons[hit]:
+                amp_range = list(range(i[0],i[1]))
+                if len(read_coords.intersection(amp_range)) > 1000:
+                    # print("Amplicon: {} range is {}".format(amplicons[hit][i], i))
+                    intersecting_amps.append((amplicons[hit][i], len(read_coords.intersection(amp_range))))
 
-        genotypes[tokens[5]]+=1
+            # print("Hit name {}\nLength:{}\tStart:{}\tEnd:{}".format(hit, span, start, end))
+            # print("Best hits:{}".format(sorted(intersecting_amps, key = lambda x : int(x[1]), reverse=True)))
+
+            for i in intersecting_amps:
+                key="{}|{}".format(hit, i[0])
+                amp_reads[key].append(tokens[0])
+            
+for i in amp_reads:
+    print(i, len(amp_reads[i]))
+
 top=genotypes.most_common(1)[0][0]
 top_count=genotypes.most_common(1)[0][1]
 print("\n*\nThe top reference is {} with {} reads mapped ({} pcent of reads).\n*\n".format(top, top_count, round(100*(top_count/c), 2)))

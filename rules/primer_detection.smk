@@ -12,6 +12,6 @@ rule porechop_custom_barcodes:
         "python ../../Porechop/porechop-runner.py -i {input} --verbosity 2 --require_two_barcodes "
         "--custom_primers --barcode_threshold 60 "
         "--threads 4 --check_reads 10000 --barcode_labels --barcode_diff 5 "
-        "--extended_labels --untrimmed -b {output.fastq} > {output.report}"
+        "--extended_labels --untrimmed -o {output.fastq} > {output.report}"
 
 

@@ -1,19 +1,20 @@
 run_name: noro_GOSH_2k
-path_to_fastq: /Volumes/aine_store/GOSH_fastq
-path_to_fast5: /Volumes/aine_store/fast5_1_100
-reference_file: references/genes.fasta
-primer_scheme_dir: pipeline_output/primer-schemes/noro_quick_cns
-primer_scheme_version: V1
-min_length: 500
+path_to_fastq: /Volumes/aine_store/20190503_2312_gosh_3runs_030519/GOSH_fastq
+path_to_fast5: /Volumes/aine_store/20190503_2312_gosh_3runs_030519/fast5
+reference_file: primer-schemes/noro2kb/V2/noro2kb.reference.fasta
+primer_scheme_dir: primer-schemes
+primer_scheme_version: noro2kb/V2
+min_length: 1000
 max_length: 3000
 barcodes:
-    barcode01: barcode01
+    # barcodeX: barcodeX
+    # barcode01: barcode01
     # barcode02: barcode02
     # barcode03: barcode03
     # barcode04: barcode04
     # barcode05: barcode05
     # barcode06: barcode06
-    # barcode07: barcode07
+    barcode07: barcode07
     # barcode08: barcode08
     # barcode09: barcode09
     # barcode10: barcode10
@@ -31,16 +32,19 @@ barcodes:
     # barcode22: barcode22
     # barcode23: barcode23
     # barcode24: barcode24
-ORFS:
-  ORF1: ORF1
-  ORF2: ORF2
+amplicons:
+  Amp1: Amp1
+  Amp2: Amp2
+  Amp3: Amp3
+  Amp4: Amp4
+  Amp5: Amp5
 samples:
-    GOSH_2kb01: barcode01
-    GOSH_2kb02: barcode02
-    GOSH_2kb03: barcode03
-    GOSH_2kb04: barcode04
-    GOSH_2kb05: barcode05
-    GOSH_2kb06: barcode06
+    # GOSH_2kb01: barcode01
+    # GOSH_2kb02: barcode02
+    # GOSH_2kb03: barcode03
+    # GOSH_2kb04: barcode04
+    # GOSH_2kb05: barcode05
+    # GOSH_2kb06: barcode06
     GII6_2kb07: barcode07
     GII6FS_2kb08: barcode08
     # GOSH_3kb09: barcode09
@@ -49,8 +53,8 @@ samples:
     # GOSH_3kb12: barcode12
     # GOSH_3kb13: barcode13
     # GOSH_3kb14: barcode14
-    # GII6_3kb15: barcode15
-    # GII6FS_3kb16: barcode16
+    GII6_3kb15: barcode15
+    GII6FS_3kb16: barcode16
     # GOSH_7kb17: barcode17
     # GOSH_7kb18: barcode18
     # GOSH_7kb19: barcode19

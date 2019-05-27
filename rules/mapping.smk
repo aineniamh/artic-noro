@@ -1,3 +1,5 @@
+#These rules correspond to doing a per-sample analysis. If non-recombinant will work and will be much quicker.
+
 rule minimap2_index:
     input:
         "references/noro.references.bed.fasta"
@@ -32,15 +34,6 @@ rule find_top_reference:
         "python scripts/find_top_reference.py --paf {input.paf} "
         "--reference {input.ref} --bed {input.bed} "
         "--output-dir {params.output_dir} --sample {wildcards.barcode} "
-
-rule make_amplicon_csv:
-    input:
-        bed='primer-schemes/noro2kb/noro2kb.scheme.bed',
-        ref="primer-schemes/references_for_bed.fasta"
-    output:
-        'primer-schemes/noro2kb/noro_amplicons.2kb.scheme.csv'
-    shell:
-        "python scripts/make_amplicon_file.py --bed_file {input.ed} --ref_file {input.ref}--amplicon_file {output}"
 
 rule find_top_reference_per_amplicon:
     input:
