@@ -12,7 +12,7 @@ This pipeline starts with the basecalled reads, gathers them together and applie
 
 ## pipeline steps
 
-<img src="https://github.com/aineniamh/artic-noro/blob/master/dag.svg">
+<img src="https://github.com/aineniamh/artic-noro/blob/master/dag_one_sample.svg">
 
 ## setup
 
