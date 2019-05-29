@@ -46,15 +46,15 @@ samples:
     # GOSH_2kb05: barcode05
     # GOSH_2kb06: barcode06
     GII6_2kb07: barcode07
-    GII6FS_2kb08: barcode08
+    # GII6FS_2kb08: barcode08
     # GOSH_3kb09: barcode09
     # GOSH_3kb10: barcode10
     # GOSH_3kb11: barcode11
     # GOSH_3kb12: barcode12
     # GOSH_3kb13: barcode13
     # GOSH_3kb14: barcode14
-    GII6_3kb15: barcode15
-    GII6FS_3kb16: barcode16
+    # GII6_3kb15: barcode15
+    # GII6FS_3kb16: barcode16
     # GOSH_7kb17: barcode17
     # GOSH_7kb18: barcode18
     # GOSH_7kb19: barcode19

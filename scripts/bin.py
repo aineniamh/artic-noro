@@ -26,7 +26,7 @@ summary = str(args.summary)
 fsum = open(summary,"w")
 
 barcode=str(args.sample)
-print(barcode)
+print("\nBinning the reads for {} into amplicons.\n".format(barcode))
 hits = collections.defaultdict(list)
 with open(blast_file, "r") as f:
     for l in f:
@@ -64,22 +64,18 @@ for record in SeqIO.parse(reads,"fastq"):
         
 seq_dict = {}
 for record in SeqIO.parse(refs,"fasta"):
-    print(record.id)
     seq_dict[record.id]=record.seq.upper()
 
-fsum.write("Total number of reads for sample {}: {}\n".format(barcode, read_counter))
-fsum.write("In file: {}\n".format(blast_file))
+print("Total number of reads for sample {}: {}\n".format(barcode, read_counter))
+print("In file: {}\n".format(blast_file))
 for amp in sorted(records):
     if amp != "none":
-        fsum.write("{} has {} reads.\n".format(amp, len(records[amp])))
-        print("In file:{}\n {} has {} reads.\n".format(blast_file, amp, len(records[amp])))
+        print("{} has {} reads.\n".format(amp, len(records[amp])))
         out_file = outdir + '/' + amp + '.fastq'
         with open(out_file, "w") as fwseq:
             SeqIO.write(records[amp], fwseq, "fastq")
 
-fsum.write("\nAmp\tGenotype\tNum Reads\n")
 for amp in sorted(genotype_counter):
-    fsum.write("***\n")
 
     top_genotype_per_amp = sorted(genotype_counter[amp], key = lambda x : genotype_counter[amp][x], reverse=True)[0]
     print(amp, top_genotype_per_amp)
@@ -96,12 +92,13 @@ for amp in sorted(genotype_counter):
 
                 record_name = tokens[1] + '|' + tokens[0]
                 if record_name == top_genotype_per_amp:
+                    fsum.write("{},{},{},{},{}\n".format(barcode,amp,top_genotype_per_amp,tokens[2],tokens[3]))
                     lprimer = len(tokens[-4])
                     rprimer= len(tokens[-3])
                     fwbed.write("{}\t{}\t{}\t{}\t{}\n".format(top_genotype_per_amp,0,lprimer,tokens[4],1))
                     fwbed.write("{}\t{}\t{}\t{}\t{}\n".format(top_genotype_per_amp,len(sequence)-rprimer,len(sequence),tokens[5],1))
     fwbed.close()
     for genotype in sorted(genotype_counter[amp], key = lambda x : genotype_counter[amp][x], reverse=True):
-        fsum.write("{}\t{}\t{}\n".format(amp, genotype, genotype_counter[amp][genotype]))
+        print("{}\t{}\t{}\n".format(amp, genotype, genotype_counter[amp][genotype]))
 fsum.close()
 

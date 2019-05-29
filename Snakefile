@@ -4,13 +4,14 @@ from Bio import SeqIO
 
 configfile: "config.yaml"
 run_name = str(config["run_name"])
-path_to_primer_scheme= str(config["primer_scheme_dir"])+str(config["primer_scheme_version"])
-references=str(config["reference_file"])
+#path_to_primer_scheme= str(config["primer_scheme_dir"])+str(config["primer_scheme_version"])
+#references=str(config["reference_file"])
 ##### Target rules #####
 
 rule all:
     input:
-        expand("pipeline_output/genome_consensus/{barcode}.genome.fasta",barcode=config["barcodes"])
+        expand("pipeline_output/consensus_genomes/{barcode}.fasta",barcode=config["barcodes"])
+        #expand("pipeline_output/genome_consensus/{barcode}.genome.fasta",barcode=config["barcodes"])
         #expand("pipeline_output/minion_output/{barcode}_bin/{barcode}_{amplicon}.consensus.fasta",amplicon=config["amplicons"],barcode=config["barcodes"])
 
 
