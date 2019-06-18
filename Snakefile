@@ -10,8 +10,9 @@ run_name = str(config["run_name"])
 
 rule all:
     input:
-        expand("pipeline_output/consensus_genomes/{barcode}.fasta",barcode=config["barcodes"])
-        #expand("pipeline_output/genome_consensus/{barcode}.genome.fasta",barcode=config["barcodes"])
+        expand("pipeline_output/binned/{barcode}_bin/binning_report.txt",barcode=config["barcodes"])
+        #expand("pipeline_output/consensus_genomes/{barcode}.fasta",barcode=config["barcodes"]),
+        #expand("pipeline_output/mapped_reads/{barcode}.paf",barcode=config["barcodes"])
         #expand("pipeline_output/minion_output/{barcode}_bin/{barcode}_{amplicon}.consensus.fasta",amplicon=config["amplicons"],barcode=config["barcodes"])
 
 
