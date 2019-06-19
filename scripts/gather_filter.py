@@ -24,8 +24,28 @@ output_dir=params.output_dir
 all_fastq_outfn = "{}/{}_all.fastq".format(output_dir,run_name)
 all_fastq_outfh = open(all_fastq_outfn, "w")
 
+print("Collecting summary files\n", file=sys.stderr)
+
+dfs = []
+
+summary_outfn = "{}/{}_sequencing_summary.txt".format(output_dir,run_name)
+summaryfh = open(summary_outfn, "w")
+c=0
+for r, d, f in os.walk(directory):
+    for fn in f:
+        if fn.endswith(".txt"):
+            print(fn)
+            summ_file = r + '/' + fn
+            df = pd.read_csv(summ_file, sep="\t")
+            dfs.append(df)
+            c+=1
+pd.concat(dfs).to_csv(summaryfh, sep="\t", index=False)
+
+summaryfh.close()
+
+
 fastq = defaultdict(list)
-for root, dirs, files in os.walk(directory):
+for root, dirs, files in os.walk(directory + "/pass"):
     paths = os.path.split(root)
     local_dir = paths[-1]
     fastq[local_dir].extend([root+'/'+f for f in files if f.endswith('.fastq')])
@@ -48,22 +68,4 @@ for local_dir, fastq in list(fastq.items()):
                         uniq += 1
 
         print("Processed: {}\t{}".format(total, uniq))
-
 all_fastq_outfh.close()
-
-print("Collecting summary files\n", file=sys.stderr)
-
-dfs = []
-
-summary_outfn = "{}/{}_sequencing_summary.txt".format(output_dir,run_name)
-summaryfh = open(summary_outfn, "w")
-
-for r, d, f in os.walk(directory):
-    for fn in f:
-        if fn.endswith(".txt"):
-            print(fn)
-            summ_file = r + '/' + fn
-            df = pd.read_csv(summ_file, sep="\t")
-            dfs.append(df)
-pd.concat(dfs).to_csv(summaryfh, sep="\t", index=False)
-summaryfh.close()

@@ -1,5 +1,6 @@
 run_name: ukraine
-path_to_fastq: /Volumes/aine_store/ukraine/guppy/pass
+output_dir: pipeline_output
+path_to_fastq: /Volumes/aine_store/ukraine/guppy #where the basecalled reads are- should have pass and fail folder with seq summary in
 path_to_fast5: /Volumes/aine_store/ukraine/fast5
 reference_file: primer-schemes/noro2kb/V2/noro2kb.reference.fasta
 primer_scheme_dir: primer-schemes
@@ -26,11 +27,11 @@ barcodes:
     # barcode16: barcode16
     # barcode17: barcode17
     # barcode18: barcode18
-    barcode19: barcode19
-    barcode20: barcode20
+    # barcode19: barcode19
+    # barcode20: barcode20
     barcode21: barcode21
-    barcode22: barcode22
-    barcode23: barcode23
+    # barcode22: barcode22
+    # barcode23: barcode23
     barcode24: barcode24
 amplicons:
   Amp1: Amp1

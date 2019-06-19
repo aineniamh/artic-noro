@@ -8,24 +8,23 @@ parser = argparse.ArgumentParser(description='Gathering and filtering files.')
 parser.add_argument("--blast_file", action="store", type=str, dest="blast")
 parser.add_argument("--reference_file", action="store", type=str, dest="reference_file")
 parser.add_argument("--reads", action="store", type=str, dest="reads")
-parser.add_argument("--bed_file", action="store", type=str, dest="bed_file")
+parser.add_argument("--amp_file", action="store", type=str, dest="amp_file")
 parser.add_argument("--output_dir", action="store", type=str, dest="output_dir")
 parser.add_argument("--summary", action="store", type=str, dest="summary")
 parser.add_argument("--sample", action="store", type=str, dest="sample")
 
 args = parser.parse_args()
 
-blast_file = str(args.blast)
-refs=str(args.reference_file)
-reads = str(args.reads)
-bed_file=str(args.bed_file)
+blast_file = args.blast
+refs=args.reference_file
+reads = args.reads
+amp_file=args.amp_file
+outdir = args.output_dir
 
-outdir = str(args.output_dir)
+amp_len_range = {"Amp1":(1900,2400),"Amp2":(1900,2400),"Amp3":(1950,2500),"Amp4":(1900,2500),"Amp5":(1400,2100),"none":(1400,2600)}
 
-summary = str(args.summary)
-fsum = open(summary,"w")
 
-barcode=str(args.sample)
+barcode=args.sample
 print("\nBinning the reads for {} into amplicons.\n".format(barcode))
 hits = collections.defaultdict(list)
 with open(blast_file, "r") as f:
@@ -55,7 +54,8 @@ for record in SeqIO.parse(reads,"fastq"):
         amp="none"
         genotype="none"
         ref_counter["none"]+=1
-    records[amp].append(record)
+    if len(record.seq) in range(amp_len_range[amp][0],amp_len_range[amp][1]):
+        records[amp].append(record)
     if not amp=="none":
         try: 
             genotype_counter[amp][top_amp[record.id]]+=1
@@ -65,40 +65,49 @@ for record in SeqIO.parse(reads,"fastq"):
 seq_dict = {}
 for record in SeqIO.parse(refs,"fasta"):
     seq_dict[record.id]=record.seq.upper()
-
+summary_dict = collections.defaultdict(list)
 print("Total number of reads for sample {}: {}\n".format(barcode, read_counter))
 print("In file: {}\n".format(blast_file))
 for amp in sorted(records):
     if amp != "none":
+        summary_dict[amp].append(("Total",len(records[amp])))
         print("{} has {} reads.\n".format(amp, len(records[amp])))
-        out_file = outdir + '/' + amp + '.fastq'
+        out_file = outdir + '/reads/' + amp + '.fastq'
         with open(out_file, "w") as fwseq:
             SeqIO.write(records[amp], fwseq, "fastq")
 
 for amp in sorted(genotype_counter):
-
     top_genotype_per_amp = sorted(genotype_counter[amp], key = lambda x : genotype_counter[amp][x], reverse=True)[0]
     print(amp, top_genotype_per_amp)
-    fwref = open("pipeline_output/binned/"+barcode+"_bin/primer-schemes/minion/V_"+amp+"/minion.reference.fasta","w")
+    fwref = open(outdir+ "/primer-schemes/"+amp+".reference.fasta","w")
     sequence=seq_dict[top_genotype_per_amp]
     fwref.write(">{}\n{}\n".format(top_genotype_per_amp,sequence))
     fwref.close()
 
-    fwbed = open("pipeline_output/binned/"+barcode+"_bin/primer-schemes/minion/V_"+amp+"/minion.scheme.bed","w")
-    with open(bed_file,"r") as f:
+    fwbed = open(outdir+"/primer-schemes/"+amp+".scheme.bed","w")
+    with open(amp_file,"r") as f:
         for l in f:
             if not l.startswith("ref"):
                 tokens=l.rstrip().split(',')
 
                 record_name = tokens[1] + '|' + tokens[0]
                 if record_name == top_genotype_per_amp:
-                    fsum.write("{},{},{},{},{}\n".format(barcode,amp,top_genotype_per_amp,tokens[2],tokens[3]))
+                    
+                    # fsum.write("{},{},{},{},{}\n".format(barcode,amp,top_genotype_per_amp,tokens[2],tokens[3]))
                     lprimer = len(tokens[-4])
+
                     rprimer= len(tokens[-3])
                     fwbed.write("{}\t{}\t{}\t{}\t{}\n".format(top_genotype_per_amp,0,lprimer,tokens[4],1))
                     fwbed.write("{}\t{}\t{}\t{}\t{}\n".format(top_genotype_per_amp,len(sequence)-rprimer,len(sequence),tokens[5],1))
     fwbed.close()
     for genotype in sorted(genotype_counter[amp], key = lambda x : genotype_counter[amp][x], reverse=True):
         print("{}\t{}\t{}\n".format(amp, genotype, genotype_counter[amp][genotype]))
+        summary_dict[amp].append((genotype,genotype_counter[amp][genotype]))
+
+fsum = open(args.summary,"w")
+fsum.write("Amplicon,Reference,Count\n")
+for i in summary_dict:
+    for j in summary_dict[i]:
+        fsum.write("{},{},{}\n".format(i, j[0],j[1]))
 fsum.close()
 
