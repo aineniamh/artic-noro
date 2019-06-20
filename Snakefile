@@ -14,7 +14,7 @@ rule all:
         expand(output_dir+"/binned/{barcode}_bin/binning_report.txt",barcode=config["barcodes"]),
         #expand("pipeline_output/consensus_genomes/{barcode}.fasta",barcode=config["barcodes"]),
         #expand("pipeline_output/mapped_reads/{barcode}.paf",barcode=config["barcodes"])
-        expand(output_dir + "/binned/{barcode}_bin/{amplicon}/mapped.racon6.sam",amplicon=config["amplicons"],barcode=config["barcodes"])
+        expand(output_dir + "/binned/{barcode}_bin/{amplicon}/medaka/consensus.mapped.sam",amplicon=config["amplicons"],barcode=config["barcodes"])
 
 
 ##### Modules #####
