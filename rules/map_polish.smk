@@ -114,7 +114,7 @@ rule racon6:
         output_dir + "/binned/{barcode}_bin/{amplicon}/racon6.fasta"
     shell:
         "racon -t 10 {input.reads} {input.paf} {input.fasta} > {output}"
-        
+
 rule minimap2_racon6:
     input:
         reads= output_dir + "/binned/{barcode}_bin/reads/{amplicon}.fastq",
@@ -123,13 +123,23 @@ rule minimap2_racon6:
         output_dir + "/binned/{barcode}_bin/{amplicon}/mapped.racon6.sam"
     shell:
         "minimap2 -ax map-ont {input.ref} {input.reads} > {output}"
-# rule medaka:
-#     input:
-#         basecalls= output_dir + "/binned/{barcode}_bin/reads/{amplicon}.fastq",
-#         draft= output_dir + "/binned/{barcode}_bin/{amplicon}/racon6.fasta"
-#     output:
-#         consensus= output_dir + "/binned/{barcode}_bin/medaka/{amplicon}.fasta"
-#     threads:
-#         2
-#     shell:
-#         "medaka_consensus -i {input.basecalls} -d {input.draft} -o {output.consensus} -t 2"
+
+rule medaka:
+    input:
+        basecalls= output_dir + "/binned/{barcode}_bin/reads/{amplicon}.fastq",
+        draft= output_dir + "/binned/{barcode}_bin/{amplicon}/racon6.fasta"
+    output:
+        consensus= output_dir + "/binned/{barcode}_bin/medaka/{amplicon}.fasta"
+    threads:
+        2
+    shell:
+        "medaka_consensus -i {input.basecalls} -d {input.draft} -o {output.consensus} -t 2"
+
+rule minimap2_medaka:
+    input:
+        reads= output_dir + "/binned/{barcode}_bin/reads/{amplicon}.fastq",
+        ref= output_dir + "/binned/{barcode}_bin/medaka/{amplicon}.fasta"
+    output:
+        output_dir + "/binned/{barcode}_bin/medaka/mapped.{amplicon}.sam"
+    shell:
+        "minimap2 -ax map-ont {input.ref} {input.reads} > {output}"
