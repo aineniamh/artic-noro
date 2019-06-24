@@ -9,6 +9,7 @@ parser.add_argument("--report", action="store", type=str, dest="report")
 parser.add_argument("--amplicon_consensus", action="store", type=str, dest="amplicon_consensus")
 parser.add_argument("--out", action="store", type=str, dest="out")
 parser.add_argument("--sample", action="store", type=str, dest="sample")
+parser.add_argument("--amplicon_info", action="store", type=str, dest="amp_info")
 
 args = parser.parse_args()
 
@@ -29,18 +30,18 @@ ambiguous_dna_values = {
 
 amp_coords={}
 amp_genotype={}
-with open(str(args.report), "r") as f:
+with open(str(args.amp_info), "r") as f:
     for l in f:
         l=l.rstrip('\n')
         tokens=l.split(',')
-        barcode,amp,genotype,l,r=tokens
-        amp_coords[amp]=(l,r)
-        amp_genotype[amp]=genotype
+        # ref,amp,start,end,r=tokens
+        amp_coords[tokens[1]]=(tokens[2],tokens[3])
+        amp_genotype[tokens[1]]=tokens[0]
         
 amp_dict = {}
 for record in SeqIO.parse(str(args.amplicon_consensus),"fasta"):
-    barcode,amp=record.id.rstrip(".primertrimmed.sorted.bam").split('_')
-    amp_dict[amp]=record.seq
+    # barcode,amp=record.id.rstrip(".primertrimmed.sorted.bam").split('_')
+    amp_dict[record.id.split('|')[0]]=record.seq
 consensus = ''
 print("Found the following ambiguities in your sequence at overlap points:\n")
 

@@ -7,6 +7,23 @@ primer_scheme_dir: primer-schemes
 primer_scheme_version: noro2kb/V2
 min_length: 1400
 max_length: 2600
+references:
+  simulated_gii6: simulated_gii6
+  simulated_1: simulated_1
+  simulated_2: simulated_2
+  # simulated_3: simulated_3
+  # simulated_4: simulated_4
+  # simulated_5: simulated_5
+  # simulated_6: simulated_6
+  # simulated_7: simulated_7
+  # simulated_8: simulated_8
+  # simulated_9: simulated_9
+  # simulated_10: simulated_10
+  # simulated_11: simulated_11
+  # simulated_12: simulated_12
+  # simulated_13: simulated_13
+  # simulated_14: simulated_14
+  # simulated_15: simulated_15
 barcodes:
     # barcodeX: barcodeX
     # barcode01: barcode01
@@ -58,11 +75,11 @@ samples:
     # GII6FS_3kb16: barcode16
     # GOSH_7kb17: barcode17
     # GOSH_7kb18: barcode18
-    GOSH_7kb19: barcode19
-    GOSH_7kb20: barcode20
-    GOSH_7kb21: barcode21
-    GOSH_7kb22: barcode22
-    GII6_7kb23: barcode23
+    # GOSH_7kb19: barcode19
+    # GOSH_7kb20: barcode20
+    # GOSH_7kb21: barcode21
+    # GOSH_7kb22: barcode22
+    # GII6_7kb23: barcode23
     GII6FS_7kb24: barcode24
 
 

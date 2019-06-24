@@ -11,10 +11,8 @@ output_dir = str(config["output_dir"])
 
 rule all:
     input:
-        expand(output_dir+"/binned/{barcode}_bin/binning_report.txt",barcode=config["barcodes"]),
-        #expand("pipeline_output/consensus_genomes/{barcode}.fasta",barcode=config["barcodes"]),
-        #expand("pipeline_output/mapped_reads/{barcode}.paf",barcode=config["barcodes"])
-        expand(output_dir + "/binned/{barcode}_bin/{amplicon}/medaka/consensus.mapped.sam",amplicon=config["amplicons"],barcode=config["barcodes"])
+        expand("pipeline_output/binned/{ref_name}/{barcode}_bin/{amplicon}/medaka/consensus.fasta",amplicon=config["amplicons"],ref_name=config["references"],barcode=config["barcodes"]),
+        expand("pipeline_output/consensus_genomes/{ref_name}/{barcode}.fasta",ref_name=config["references"],barcode=config["barcodes"])
 
 
 ##### Modules #####
@@ -27,9 +25,10 @@ include: "rules/bin.smk"
 #include: "rules/minion.smk"
 include: "rules/generate_consensus.smk"
 include: "rules/map_polish.smk"
+include: "rules/gen_ref_file.smk"
 
-onstart:
-    print("Setting up the artic package")
-    shell("cd fieldbioinformatics && python setup.py install")
-    shell("export PATH=$PATH:`pwd`/artic")
-    shell("cd .. ")
+#onstart:
+#    print("Setting up the artic package")
+#    shell("cd fieldbioinformatics && python setup.py install")
+#    shell("export PATH=$PATH:`pwd`/artic")
+#    shell("cd .. ")

@@ -9,12 +9,14 @@ import collections
 parser = argparse.ArgumentParser(description='Make amp file from bed file.')
 parser.add_argument("--bed", action="store", type=str, dest="bed")
 parser.add_argument("--ref", action="store", type=str, dest="ref")
+parser.add_argument("--ref_out", action="store", type=str, dest="ref_out")
 args = parser.parse_args()
 
-file_stem=str(args.ref).rstrip(".reference.fasta")+".amplicons"
-amp_file=file_stem + ".csv"
-amp_seq_file=file_stem + ".fasta"
-amp_img=file_stem + ".png"
+file_stem=str(args.ref_out).rstrip(".fasta")
+print(file_stem)
+amp_file=file_stem + "s.csv"
+amp_seq_file=file_stem + "s.fasta"
+amp_img=file_stem + "s.png"
 fw=open(amp_file,"w")
 fw.write("ref,amp_name,start,end,lprimer,rprimer,lseq,rseq,length,pool\n")
 c = 0
