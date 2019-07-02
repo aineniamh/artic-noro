@@ -36,13 +36,23 @@ rule blastn:
         "blastn -task blastn -db {input.db} "
         "-query {input.reads} -out {output} "
         "-num_threads 1 -outfmt 10"
-            
+
+rule minimap2_detailed:
+    input:
+        db="references/initial_record_set.fasta",
+        reads= output_dir + "/binned/barcode_{barcode}.fastq" 
+    output:
+         output_dir + "/minimap_results/barcode_{barcode}.map.paf"
+    shell:
+        "minimap2 -x map-ont --secondary=no {input.db} {input.fastq} > {output}"
+
 rule bin:
     input:
         blast= output_dir + "/blast_results/barcode_{barcode}.blast.csv",
         reads= output_dir + "/binned/barcode_{barcode}.fastq",
         refs="primer-schemes/noro2kb/V2/noro2kb.amplicons.fasta",
-        amps="primer-schemes/noro2kb/V2/noro2kb.amplicons.csv"
+        amps="primer-schemes/noro2kb/V2/noro2kb.amplicons.csv",
+        paf=output_dir + "/minimap_results/barcode_{barcode}.map.paf"
     params:
         outdir= output_dir + "/binned/{barcode}_bin",
         sample="{barcode}"

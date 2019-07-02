@@ -33,7 +33,7 @@ barcodes:
     # barcode21: barcode21
     # barcode22: barcode22
     # barcode23: barcode23
-    barcode24: barcode24
+    24: 24
 amplicons:
   Amp1: Amp1
   Amp2: Amp2
