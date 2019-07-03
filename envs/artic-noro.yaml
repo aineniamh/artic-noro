@@ -16,11 +16,10 @@ dependencies:
   - edlib=1.2.3
   - eigen=3.2=3
   - ete3=3.1.1=py36_0
-  - gcc-4.8.5
+  # - gcc-4.8.5
   - goalign=0.2.8=0
   - gotree=0.2.10=0
   - iqtree=1.6.10
-  - jupyter=4.4.0
   - libdeflate=1.0
   - mafft=7.407=1
   - matplotlib=3.0.3

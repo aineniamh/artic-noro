@@ -2,7 +2,7 @@ run_name: ukraine
 output_dir: pipeline_output
 path_to_fastq: /Volumes/aine_store/ukraine/guppy #where the basecalled reads are- should have pass and fail folder with seq summary in
 path_to_fast5: /Volumes/aine_store/ukraine/fast5
-path_to_demuxed: /data/demultiplexed #where rampart outputs the reads
+path_to_demuxed: pipeline_output/demuxed #where rampart outputs the reads
 reference_file: primer-schemes/noro2kb/V2/noro2kb.reference.fasta
 primer_scheme_dir: primer-schemes
 primer_scheme_version: noro2kb/V2
@@ -33,7 +33,7 @@ barcodes:
     # barcode21: barcode21
     # barcode22: barcode22
     # barcode23: barcode23
-    24: 24
+    NB24: NB24
 amplicons:
   Amp1: Amp1
   Amp2: Amp2

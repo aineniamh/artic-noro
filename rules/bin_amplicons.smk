@@ -21,7 +21,7 @@ rule fastq_to_fasta:
     input:
          output_dir + "/binned/barcode_{barcode}.fastq"
     output:
-         output_dir + "/binned/binned_{barcode}.fasta"
+         output_dir + "/binned/barcode_{barcode}.fasta"
     shell:
         "seqtk seq -A {input} > {output}"
 
@@ -44,7 +44,7 @@ rule minimap2_detailed:
     output:
          output_dir + "/minimap_results/barcode_{barcode}.map.paf"
     shell:
-        "minimap2 -x map-ont --secondary=no {input.db} {input.fastq} > {output}"
+        "minimap2 -x map-ont --secondary=no {input.db} {input.reads} > {output}"
 
 rule bin:
     input:
@@ -64,5 +64,5 @@ rule bin:
     shell:
         "python scripts/bin.py --blast_file {input.blast} "
         "--reference_file {input.refs} --reads {input.reads} "
-        "--output_dir {params.outdir} --summary {output.summary} --amp_file {input.amps} "
+        "--output_dir {params.outdir} --summary {output.summary} --paf_file {input.paf} --amp_file {input.amps} "
         "--sample {params.sample}"

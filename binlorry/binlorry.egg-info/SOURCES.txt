@@ -1,0 +1,13 @@
+LICENSE
+MANIFEST.in
+README.md
+setup.py
+binlorry/binlorry.py
+binlorry/misc.py
+binlorry/version.py
+binlorry.egg-info/PKG-INFO
+binlorry.egg-info/SOURCES.txt
+binlorry.egg-info/dependency_links.txt
+binlorry.egg-info/entry_points.txt
+binlorry.egg-info/not-zip-safe
+binlorry.egg-info/top_level.txt

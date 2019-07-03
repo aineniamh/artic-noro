@@ -10,8 +10,8 @@ output_dir = str(config["output_dir"])
 
 rule all:
     input:
-        expand(output_dir+"/binned/{barcode}_bin/binning_report.txt",barcode=config["barcodes"]),
-        expand(output_dir + "/binned/{barcode}_bin/{amplicon}/medaka/consensus.mapped.sam",amplicon=config["amplicons"],barcode=config["barcodes"])
+        #expand(output_dir+"/binned/{barcode}_bin/binning_report.txt",barcode=config["barcodes"]),
+        expand(output_dir + "/binned/{barcode}_bin/binning_report.txt",barcode=config["barcodes"])
 
 
 ##### Modules #####

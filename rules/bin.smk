@@ -10,7 +10,7 @@ rule binlorry:
         reads= output_dir + "/binned/barcode_{barcode}.fastq"
     shell:
         "binlorry -i {params.path_to_demuxed} -n {params.min_length} "
-        "-x {params.max_length} --o {params.outdir}/binned "
+        "-x {params.max_length} --o {params.outdir}/barcode "
         "--bin-by barcode --filter-by barcode {params.sample}"
 
 
