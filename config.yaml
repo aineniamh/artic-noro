@@ -9,7 +9,7 @@ primer_scheme_version: noro2kb/V2
 min_length: 1400
 max_length: 2600
 barcodes:
-    # barcodeX: barcodeX
+    barcodeX: barcodeX
     # barcode01: barcode01
     # barcode02: barcode02
     # barcode03: barcode03
@@ -33,7 +33,7 @@ barcodes:
     # barcode21: barcode21
     # barcode22: barcode22
     # barcode23: barcode23
-    NB24: NB24
+    # NB24: NB24
 amplicons:
   Amp1: Amp1
   Amp2: Amp2
