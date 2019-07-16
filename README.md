@@ -4,19 +4,40 @@ Repository for a snakemake pipeline for running analysis for the artic-noro MinI
 
 ## background
 
-RNA was extracted from stool samples and reverse transcribed into cDNA. A tiled amplicon approach was used to amplify any norovirus in the sample. Primal scheme was used to develop the scheme of primers, with an average size amplicon size of 2kb. Amplicons are shown in the figure below. To cover the diversity of norovirus, multiple primer schemes were created with different sets of reference sequences from GenBank. Sequencing was performed using the MinION and the fast5 reads were basecalled with MinKNOW. 
+This pipeline can be run independently as part of a stand-alone analysis or can be run as part of the RAMPART pipeline. The two branches of this repository provide the alternative implementations.
+
+The pipeline accepts basecalled fastq nanopore reads.
+
+> *Recommendation:* Run the latest high-accuracy model of guppy
+
+This pipeline is developed as part of a 'best-practices' protocol for clinical nanopore sequencing of norovirus. The complementary upstream protocol can be found in #Link url. A tiled amplicon approach is currently being tested with 2kb primers developed by Primal Scheme. Amplicons produced by the scheme, spanning the genome, are shown in the figure below. To cover the diversity of norovirus, multiple primer schemes were created with different sets of reference sequences from GenBank. 
 
 <img src="https://github.com/aineniamh/artic-noro/blob/master/primer-schemes/noro2kb/V2/noro2kb.amplicons.png">
 
-This pipeline starts with the basecalled reads, gathers them together and applies a read length filter, discarding reads less than 1000 bases or greater than 3000 bases. It then demultiplexes the reads using ``qcat`` and bins them into ``amplicons`` by BLASTing them against a reference database of amplicon nucleotide sequences. The best genotype is assigned per amplicon based on ``blastn`` results. Individual bed files and reference files are created using custom scripts and an instance of Nick Loman's ``minion`` pipeline is run for each amplicon for each sample. The output is then tidied up into respective directories.
 
-## pipeline steps
+## realtime pipeline
+
+This pipeline will be integrated into ``RAMPART``. The pipeline is visualised in the figure below.
+
+1. Start the sequencing run with ``MinKnow``, use live basecalling with ``guppy``.
+2. Start ``RAMPART``. In the future, there will have a desktop application to do this, currently it is launched in the terminal, instructions can be found here #Link url.
+3. The server process of ``RAMPART`` watches the directory where the reads will be produced and demultiplexes and trims the fastq reads using ``porechop``, barcode labels are written to the header of each read. Reads are mapped against a panel of references using ``minimap2`` and results are pushed to the front-end visualisation. For each sample, the depth of coverage is shown in real-time as the reads are being produced. 
+4. Once sufficient depth is achieved, the anaysis pipeline can be started by clicking in RAMPART's GUI. 
+5. ``binlorry`` parses through the fastq files with barcode labels, pulling out the relevant reads and binning them into a single fastq file. It also applies a read-length filter, that you can customise in the GUI, and can filter by reference match, in cases of mixed-samples.
+6. ``racon`` and ``minimap2`` are run iteratively six times against the fastq reads and then a final polishing consensus-generation step is performed using ``medaka``. 
+7. Variants are called on the reads (currently in testing), and phasing is performed to provide information on closly related mixed infections. 
+8. The consensus sequence(s) from the sample are aligned with concurrent samples in the context of the reference genomes using ``mafft`` and ``iqtree`` is used to construct a phylogeny. 
+9. Future: a time-tree will be generated and epidemiological metadata used with Trans-phylo to infer transmission events. Both genetic and epidemiological data will be visualised in an interactive report that will include the floor plan of the hospital, or local map if outbreak is community based. 
+
+## standalone pipeline
+
+This pipeline starts with the basecalled fastq files. It demultiplexes the reads using ``porechop`` and filters by length using ``binlorry``. ``minimap2`` is used to identify the closest major strains present in each sample 
 
 <img src="https://github.com/aineniamh/artic-noro/blob/master/dag_one_sample.svg">
 
 ## setup
 
-Although not a requirement, an install of conda will make the setup of this pipeline on your local machine much more streamlined. I have created an ``artic-noro`` conda environment which will allow you to access all the software required for the pipeline to run. To install conda, visit here https://conda.io/docs/user-guide/install/ in a browser. 
+Although not a requirement, an install of conda will make the setup of this pipeline on your local machine much easier. I have created an ``artic-noro`` conda environment which will allow you to access all the software required for the pipeline to run. To install conda, visit here https://conda.io/docs/user-guide/install/ in a browser. 
 
 > *Recommendation:* Install the `64-bit Python 3.6` version of Miniconda
 
@@ -48,7 +69,7 @@ conda deactivate
 
 To run the analysis using snakemake, you will want to customise the ``config.yaml`` file.
 
-Inside the ``config.yaml`` file, you can change your MinION ``run_name`` and the barcode names. Ensure ```path_to_fast5``` and ```path_to_fastq``` point to where your data is.
+Inside the ``config.yaml`` file, you can change your MinION ``run_name`` and the barcode names. Ensure ```path_to_fastq``` point to where your data is.
 
 ## running the pipeline
 
@@ -65,7 +86,7 @@ snakemake --cores X
 ```
 
 where X is the number of threads you wish to run.
-
+<!-- 
 ## pipeline description
 
 1. setup ``artic fieldbioinformatics`` package \
@@ -93,7 +114,7 @@ For each ``barcode``, identifies the reference with the greatest number of reads
 Re-maps the reads for each demultiplexed file against their respective top reference and outputs a sam file in ``pipeline_output/best_ref_mapped_reads/``.
 8. Quick reference generation \
 ``samtools`` is used to sort the reads and ``bcftools`` is then used to call variants, normalise for indels and call a quick consensus sequence ``pipeline_output/consensus/{barcode}.cns.fasta``. This consensus sequence is then renamed and saved in ``primer-schemes/noro2kb/V_barcode/`` as ``barcode.reference.fasta``. -->
-8. nanopolish_index \
+<!-- 8. nanopolish_index \
 Creates the nanopolish index necessary for running nanopolish in the next step. It accesses the gathered fastq and sequencing summary files from step 2 and also the signal-level fast5 data.
 9. artic_minion \
 The ``artic minion`` pipeline, written by Nick Loman, is then run for each barcode in order to generate a high-quality consensus sequence, using an approach informed by signal-level data. This pipeline performs the following steps:
@@ -106,4 +127,4 @@ The ``artic minion`` pipeline, written by Nick Loman, is then run for each barco
 10. organise_minion_output \
 Moves artic_minion output files into respective ``pipeline_output/minion_output/barcode`` directories on completion of the pipeline.
 11. generate_genome (Not done yet) \
-Overlays the consensus sequences for each amplicon and creates a whole-genome reference sequence. 
+Overlays the consensus sequences for each amplicon and creates a whole-genome reference sequence.  --> -->

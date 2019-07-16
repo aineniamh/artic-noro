@@ -58,8 +58,8 @@ rule bin:
         sample="{barcode}"
     output:
         summary= output_dir + "/binned/{barcode}_bin/binning_report.txt",
-        ref=expand(output_dir + "/binned/{{barcode}}_bin/primer-schemes/{amplicon}.reference.fasta", amplicon=config["amplicons"]),
-        bed=expand(output_dir + "/binned/{{barcode}}_bin/primer-schemes/{amplicon}.scheme.bed", amplicon=config["amplicons"]),
+        ref=expand(output_dir + "/binned/{{barcode}}_bin/{amplicon}.reference.fasta", amplicon=config["amplicons"]),
+        # bed=expand(output_dir + "/binned/{{barcode}}_bin/primer-schemes/{amplicon}.scheme.bed", amplicon=config["amplicons"]),
         reads=expand(output_dir + "/binned/{{barcode}}_bin/reads/{amplicon}.fastq", amplicon=config["amplicons"])
     shell:
         "python scripts/bin.py --blast_file {input.blast} "
