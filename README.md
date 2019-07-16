@@ -33,7 +33,7 @@ This pipeline will be integrated into ``RAMPART``. The pipeline is visualised in
 
 This pipeline starts with the basecalled fastq files. It demultiplexes the reads using ``porechop`` and filters by length using ``binlorry``. ``minimap2`` is used to identify the closest major strains present in each sample 
 
-<img src="https://github.com/aineniamh/artic-noro/blob/master/dag_one_sample.svg">
+<!-- <img src="https://github.com/aineniamh/artic-noro/blob/master/dag_one_sample.svg"> -->
 
 ## setup
 
