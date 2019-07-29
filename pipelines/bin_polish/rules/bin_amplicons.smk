@@ -9,33 +9,33 @@ rule make_amplicon_files:
     shell:
         "python scripts/make_amplicon_files.py --bed {input.bed} --ref {input.ref}"
 
-rule makeblastdb:
-    input:
-        "primer-schemes/noro2kb/V2/noro2kb.amplicons.fasta"
-    output:
-        "primer-schemes/noro2kb/V2/noro2kb.amplicons.fasta.nhr"
-    shell:
-        "makeblastdb -in {input} -dbtype nucl"
+# rule makeblastdb:
+#     input:
+#         "primer-schemes/noro2kb/V2/noro2kb.amplicons.fasta"
+#     output:
+#         "primer-schemes/noro2kb/V2/noro2kb.amplicons.fasta.nhr"
+#     shell:
+#         "makeblastdb -in {input} -dbtype nucl"
 
-rule fastq_to_fasta:
-    input:
-         output_dir + "/binned/barcode_{barcode}.fastq"
-    output:
-         output_dir + "/binned/barcode_{barcode}.fasta"
-    shell:
-        "seqtk seq -A {input} > {output}"
+# rule fastq_to_fasta:
+#     input:
+#          output_dir + "/binned/barcode_{barcode}.fastq"
+#     output:
+#          output_dir + "/binned/barcode_{barcode}.fasta"
+#     shell:
+#         "seqtk seq -A {input} > {output}"
 
-rule blastn:
-    input:
-        db_hidden="primer-schemes/noro2kb/V2/noro2kb.amplicons.fasta.nhr",
-        db="primer-schemes/noro2kb/V2/noro2kb.amplicons.fasta",
-        reads= output_dir + "/binned/barcode_{barcode}.fasta" 
-    output:
-         output_dir + "/blast_results/barcode_{barcode}.blast.csv"
-    shell:
-        "blastn -task blastn -db {input.db} "
-        "-query {input.reads} -out {output} "
-        "-num_threads 1 -outfmt 10"
+# rule blastn:
+#     input:
+#         db_hidden="primer-schemes/noro2kb/V2/noro2kb.amplicons.fasta.nhr",
+#         db="primer-schemes/noro2kb/V2/noro2kb.amplicons.fasta",
+#         reads= output_dir + "/binned/barcode_{barcode}.fasta" 
+#     output:
+#          output_dir + "/blast_results/barcode_{barcode}.blast.csv"
+#     shell:
+#         "blastn -task blastn -db {input.db} "
+#         "-query {input.reads} -out {output} "
+#         "-num_threads 1 -outfmt 10"
 
 rule minimap2_detailed:
     input:
