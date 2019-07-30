@@ -1,0 +1,18 @@
+import os
+import collections
+from Bio import SeqIO
+
+configfile: "pipelines/bin_filter/config.yaml"
+output_dir = config["output_dir"]
+
+##### Target rules #####
+
+rule all:
+    input:
+        expand(config["output_dir"] + "/binned/barcode_{barcode}/references/{analysis_stem}.fasta", barcode=config["barcode"], analysis_stem = config["analysis_stem"]),
+        expand(output_dir+"/binned/barcode_{barcode}/orf_binned/barcode_{barcode}_{analysis_stem}.fastq", analysis_stem=config["analysis_stem"],barcode=config["barcode"]),
+        expand(output_dir + "/binned/barcode_{barcode}/medaka/{analysis_stem}/consensus.fasta",analysis_stem=config["analysis_stem"],barcode=config["barcode"])
+
+##### Modules #####
+include: "rules/bin.smk"
+include: "rules/map_polish.smk"

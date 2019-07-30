@@ -1,6 +1,11 @@
-file_stem: test_reads #the stem of the fastq file you wish to run through the pipeline
+file_stem: sample_reads #the stem of the fastq file you wish to run through the pipeline
+
+#Where is the data and where should it be put
+
 basecalledPath: path/to/data #where rampart will find the data
-demuxedPath: path/to/data #where rampart will put the data
+outputPath: path/to/data #where rampart will put the data
+
+#For mapping
 referencePanelPath: references.fasta
 referenceConfigPath: coordinate_reference.fasta
 bedPath: scheme.bed # this is optional
@@ -13,4 +18,9 @@ no_split: "--no_split"
 discard_unassigned: "--discard_unassigned"
 demuxOption: "--native_barcodes"
 
-# Should hopefully be able to integrate this with the rampart config creation
+# binning options
+
+barcode : BCXX
+min_length: 400
+max_length: 2400
+
