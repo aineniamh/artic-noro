@@ -10,9 +10,7 @@ The pipeline accepts basecalled fastq nanopore reads.
 
 > *Recommendation:* Run the latest high-accuracy model of guppy
 
-This pipeline is developed as part of a 'best-practices' protocol for clinical nanopore sequencing of norovirus. The complementary upstream protocol can be found in #Link url. A tiled amplicon approach is currently being tested with 2kb primers developed by Primal Scheme. Amplicons produced by the scheme, spanning the genome, are shown in the figure below. To cover the diversity of norovirus, multiple primer schemes were created with different sets of reference sequences from GenBank. 
-
-## background
+This pipeline is developed as part of a 'best-practices' protocol for clinical nanopore sequencing of norovirus. The complementary upstream sequencing protocol can be found [here.](protocol/Norovirus-2kb-Nanopore-sequencing-protocol.md) A tiled amplicon approach is currently being tested with 2kb primers developed by Primal Scheme. Amplicons produced by the scheme, spanning the genome, are shown in the figure below. To cover the diversity of norovirus, multiple primer schemes were created with different sets of reference sequences from GenBank. 
 
 RNA was extracted from stool samples and reverse transcribed into cDNA. A tiled amplicon approach was used to amplify any norovirus in the sample. Primal scheme was used to develop the scheme of primers, with an average size amplicon size of 2kb. Amplicons are shown in the figure below. To cover the diversity of norovirus, multiple primer schemes were created with different sets of reference sequences from GenBank. Sequencing was performed using the MinION and the fast5 reads were basecalled with MinKNOW. 
 
