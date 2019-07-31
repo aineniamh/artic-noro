@@ -1,12 +1,12 @@
 rule write_ref_file:
     input:
-        refs = config["reference_file"],
-        new_config = config["output_dir"] + "/binned/barcode_{barcode}/config.yaml"
+        refs = config["referencePanelPath"],
+        new_config = outputPath + "/binned/barcode_{barcode}/config.yaml"
     params:
         analysis_stem = config["analysis_stem"],
-        outdir = config["output_dir"] + "/binned/barcode_{barcode}/references/"
+        outdir = outputPath + "/binned/barcode_{barcode}/references/"
     output:
-        expand(config["output_dir"] + "/binned/barcode_{{barcode}}/references/{analysis_stem}.fasta", analysis_stem = config["analysis_stem"])
+        expand(outputPath + "/binned/barcode_{{barcode}}/references/{analysis_stem}.fasta", analysis_stem = config["analysis_stem"])
     run:
         refs = {}
         for record in SeqIO.parse(str(input.refs), "fasta"):
@@ -19,15 +19,16 @@ rule write_ref_file:
 
 rule bin_by_analysis:
     input:
-        reads=output_dir+"/binned/barcode_{barcode}/orf_annotated/barcode_{barcode}.fastq"
+        reads=outputPath+"/binned/barcode_{barcode}/orf_annotated/barcode_{barcode}.fastq"
     params:
         sample= "{barcode}",
-        outdir = config["output_dir"]+'/binned/barcode_{barcode}/orf_binned'
+        outdir = outputPath+'/binned/barcode_{barcode}/orf_binned'
         # custom = config["custom_bin"]
     output:
-        expand(output_dir+"/binned/barcode_{{barcode}}/orf_binned/barcode_{{barcode}}_{analysis_stem}.fastq", analysis_stem=config["analysis_stem"])
+        expand(outputPath+"/binned/barcode_{{barcode}}/orf_binned/barcode_{{barcode}}_{analysis_stem}.fastq", analysis_stem=config["analysis_stem"])
     shell:
         "binlorry -i {input.reads}  "
         "--o {params.outdir}/barcode_{params.sample} "
         "--bin-by orf reference_hit "
         "-n 800 -x 3000"
+    

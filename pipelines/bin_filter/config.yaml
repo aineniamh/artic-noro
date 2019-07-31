@@ -1,9 +1,8 @@
 run_name: Noro2kb
-output_dir: pipeline_output
-path_to_demuxed: pipeline_output/annotated_reads/ #where rampart_demux_map outputs the reads
-reference_file: rampart_config/norovirus/initial_record_set.fasta
-primer_scheme_dir: primer-schemes
-primer_scheme_version: noro2kb/V2
+outputPath: pipeline_output
+# referencePanelPath : path/to/references.fasta
+# primer_scheme_dir: primer-schemes
+# primer_scheme_version: noro2kb/V2
 min_length: 800
 max_length: 2600
 custom_bin: 
@@ -12,34 +11,9 @@ orf:
   ORF_2_3: [5354,7600]
 barcode: NB24
 amplicons:
-  Amp1: Amp1
-  Amp2: Amp2
-  Amp3: Amp3
-  Amp4: Amp4
-  Amp5: Amp5
-
-    # barcode01: barcode01
-    # barcode02: barcode02
-    # barcode03: barcode03
-    # barcode04: barcode04
-    # barcode05: barcode05
-    # barcode06: barcode06
-    # barcode07: barcode07
-    # barcode08: barcode08
-    # barcode09: barcode09
-    # barcode10: barcode10
-    # barcode11: barcode11
-    # barcode12: barcode12
-    # barcode13: barcode13
-    # barcode14: barcode14
-    # barcode15: barcode15
-    # barcode16: barcode16
-    # barcode17: barcode17
-    # barcode18: barcode18
-    # barcode19: barcode19
-    # barcode20: barcode20
-    # barcode21: barcode21
-    # barcode22: barcode22
-    # barcode23: barcode23
-
+  -  Amp1
+  -  Amp2
+  -  Amp3
+  -  Amp4
+  -  Amp5
 

@@ -46,7 +46,7 @@ def get_hits(paf):
             if tokens[5]=='*': #output by minimap2 if read doesn't map
                 hit_dict[tokens[0]]=("none",0,0)
             else:
-                hit_dict[tokens[0]]=(tokens[5],int(tokens[9]),int(tokens[10]))
+                hit_dict[tokens[0]]=(tokens[5],int(tokens[7]),int(tokens[8]))
     return hit_dict
 
 def get_barcodes(barcoding_report):

@@ -13,6 +13,7 @@ parser.add_argument("--orfs", action="store_true", dest="orfs")
 # parser.add_argument("--bed_file", action="store", type=str, dest="bed_file")
 parser.add_argument("--references", action="store", type=str, dest="references")
 
+parser.add_argument("--outputPath", action="store", type=str, dest="outputPath")
 parser.add_argument("--reads_out", action="store", type=str, dest="reads_out")
 parser.add_argument("--config_out", action="store", type=str, dest="config_out")
 parser.add_argument("--csv_out", action="store", type=str, dest="csv_out")
@@ -114,8 +115,7 @@ with open(str(args.reads_out),"w") as fw: #file to write reads
     with open(str(args.config_out),"w") as freport: #file to write genotype information
         fcsv = open(str(args.csv_out),"w")
 
-        freport.write("reference_file: rampart_config/norovirus/initial_record_set.fasta\n")
-        freport.write("barcode: {}\nanalysis_stem:\n".format(str(args.sample)))
+        freport.write("referencePanelPath: {}\noutputPath: {}\nbarcode: {}\nanalysis_stem:\n".format(str(args.references),str(args.outputPath),str(args.sample)))
         
         for orf in genotypes:
             if orf != "unknown":

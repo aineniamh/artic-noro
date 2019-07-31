@@ -1,0 +1,40 @@
+run_name: Noro2kb
+file_stem: fastq_runid_b10b0df343a0c44bc8f661f2cfbe235fce1fbedc_11 #the stem of the fastq file you wish to run through the pipeline
+
+#Where is the data and where should it be put
+
+basecalledPath: "rampart_config/norovirus/data/basecalled" #where rampart will find the data
+outputPath: pipeline_master_test #where rampart will put the data
+
+#For mapping
+referencePanelPath: rampart_config/norovirus/initial_record_set.fasta
+referenceConfigPath: coordinate_reference.fasta
+bedPath: scheme.bed # this is optional
+
+# binning options
+
+barcodes : 
+  - NB23
+  - NB24
+min_length: 800
+max_length: 2600
+
+path_to_demuxed: pipeline_output/annotated_reads/ #where rampart_demux_map outputs the reads
+reference_file: rampart_config/norovirus/initial_record_set.fasta
+primer_scheme_dir: primer-schemes
+primer_scheme_version: noro2kb/V2
+
+custom_bin: 
+
+orf: 
+  ORF_1: [1,5370] 
+  ORF_2_3: [5354,7600]
+
+amplicons:
+  -  Amp1
+  -  Amp2
+  -  Amp3
+  -  Amp4
+  -  Amp5
+
+analysis_stem:

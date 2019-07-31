@@ -2,15 +2,15 @@ import os
 import collections
 from Bio import SeqIO
 
-configfile: "pipelines/bin_filter/config.yaml"
+configfile: "pipelines/master_consensus/config.yaml"
 
 
 ##### Target rules #####
 
 rule all:
     input:
-        expand(config["output_dir"] + "/binned/barcode_{barcode}/config.yaml",barcode=config["barcode"]),
-        expand(config["output_dir"] + "/binned/barcode_{barcode}/barcode_{barcode}.fastq",barcode=config["barcode"])
+        expand(config["outputPath"] + "/binned/barcode_{barcode}/config.yaml",barcode=config["barcode"]),
+        expand(config["outputPath"] + "/binned/barcode_{barcode}/barcode_{barcode}.fastq",barcode=config["barcode"])
 
 
 

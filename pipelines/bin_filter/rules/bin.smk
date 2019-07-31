@@ -2,13 +2,13 @@ rule binlorry:
     input:
     params:
         sample= "{barcode}",
-        path_to_demuxed= config["path_to_demuxed"],
+        path_to_demuxed= config["outputPath"] + "/annotated_reads/",
         min_length= config["min_length"],
         max_length= config["max_length"],
-        outdir = config["output_dir"]+'/binned/barcode_{barcode}'
+        outdir = config["outputPath"]+'/binned/barcode_{barcode}'
         # custom = config["custom_bin"]
     output:
-        reads= temp(config["output_dir"] + "/binned/barcode_{barcode}/barcode_{barcode}.fastq")
+        reads= temp(config["outputPath"] + "/binned/barcode_{barcode}/barcode_{barcode}.fastq")
     shell:
         "binlorry -i {params.path_to_demuxed}  "
         "-n {params.min_length} "
@@ -19,14 +19,15 @@ rule binlorry:
 
 rule which_orf:
     input:
-        reads= config["output_dir"] + "/binned/barcode_{barcode}/barcode_{barcode}.fastq",
-        refs = config["reference_file"]
+        reads= config["outputPath"] + "/binned/barcode_{barcode}/barcode_{barcode}.fastq",
+        refs = config["referencePanelPath"],
     params:
-        sample = "{barcode}"
+        sample = "{barcode}",
+        outputPath = config["outputPath"]
     output:
-        summary= config["output_dir"] + "/binned/barcode_{barcode}/orf_annotated/barcode_{barcode}.genotype_report.csv",
-        reads = config["output_dir"] + "/binned/barcode_{barcode}/orf_annotated/barcode_{barcode}.fastq",
-        new_config =  config["output_dir"] + "/binned/barcode_{barcode}/config.yaml"
+        summary= config["outputPath"] + "/binned/barcode_{barcode}/orf_annotated/barcode_{barcode}.genotype_report.csv",
+        reads = config["outputPath"] + "/binned/barcode_{barcode}/orf_annotated/barcode_{barcode}.fastq",
+        new_config =  config["outputPath"] + "/binned/barcode_{barcode}/config.yaml"
     shell:
         "python pipelines/bin_filter/scripts/parse_ref_and_depth.py "
         "--reads {input.reads} --orfs "
@@ -34,7 +35,8 @@ rule which_orf:
         "--references {input.refs} "
         "--config_out {output.new_config} "
         "--csv_out {output.summary} "
-        "--sample {params.sample}"
+        "--sample {params.sample} "
+        "--outputPath {params.outputPath}"
 
         
 
