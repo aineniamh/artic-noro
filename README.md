@@ -37,6 +37,9 @@ The pipeline accepts basecalled (fastq) nanopore reads.
 11. [``racon``](https://github.com/isovic/racon) and [``minimap2``](https://github.com/lh3/minimap2) are run iteratively four times against the fastq reads and then a final polishing consensus-generation step is performed using [``medaka``](https://github.com/nanoporetech/medaka). 
 12. A markdown report is generated, summarising the viral profile of each sample. 
 
+<img src="https://github.com/aineniamh/artic-noro/blob/master/rampart_config/rampart_screenshot.png">
+Screenshot of RAMPART's front end showing norovirus data. 
+
 
 ## setup
 
