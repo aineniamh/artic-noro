@@ -18,89 +18,82 @@ author: Luke Meredith
 citation: "Meredith, Quick *et al.* In Prep."
 ---
 
-{% include callout.html
-type='default'
-content='**Overview:** The following protocol is adapted from the methods of [Quick et al. (2017) *Nature Protocols* **12:** 1261–1276 doi:10.1038/nprot.2017.066](http://doi.org/10.1038/nprot.2017.066) and covers primers, amplicon preparation and clean-up, then uses a single-tube protocol to barcode and adaptor ligate the library, before running minION.'
-%}
+
+**Overview:** The following protocol is adapted from the methods of [Quick et al. (2017) *Nature Protocols* **12:** 1261–1276 doi:10.1038/nprot.2017.066](http://doi.org/10.1038/nprot.2017.066) and covers primers, amplicon preparation and clean-up, then uses a single-tube protocol to barcode and adaptor ligate the library, before running minION.
 
 <br />
 
 This document is part of the Norovirus 2kb Nanopore sequencing protocol package:
-: [http://artic.network/ebov/](http://artic.network/ebov/)
+: [http://artic.network/noro](http://github.com/aineniamh/artic-noro.git)
 
 #### Related documents:
 
 Norovirus 2kb primer scheme:
-: [https://github.com/aineniamh/artic-noro/blob/master/primer-schemes/noro2kb/V2/noro2kb.amplicons.csv]
-(https://github.com/aineniamh/artic-noro/blob/master/primer-schemes/noro2kb/V2/noro2kb.amplicons.csv) 
+https://github.com/aineniamh/artic-noro/blob/master/primer-schemes/noro2kb/V2/noro2kb.amplicons.csv
 
 Norovirus 2kb Nanopore sequencing protocol:
-: [http://artic.network/ebov/ebov-seq-sop.html](http://artic.network/ebov/ebov-seq-sop.html)
+http://artic.network/ebov/ebov-seq-sop.html
 
 Ebola virus Nanopore sequencing kit-list:
-: [http://artic.network/ebov/ebov-seq-kit.html](http://artic.network/ebov/ebov-seq-kit.html)
+[http://artic.network/ebov/ebov-seq-kit.html](http://artic.network/ebov/ebov-seq-kit.html)
 
-<br /><br /><br />
+-------
 
-{% include wellcome-trust.html %}
-
-<div class="pagebreak"> </div>
 ## Preparation
 
 #### Equipment required:
 
-   |---:|:---
-   |2| Portable nucleic acid preparation hood or equivalent
-   |1| 12V vortex
-   |1| Sprout® portable centrifuge
-   |1| 1mL Eppendorf pipette
-   |1| 0.1mL Eppendorf pipette
-   |1| 0.01L Eppendorf pipette
-   |1| 1.5mL/0.6mL convertible tube rack
-   |1| Qubit4 Fluorometer (ThermoFisher&trade;)
-   |1| miniPCR machine.
-   |1| Heat block
-   |1| magnetic rack
-{: .compact}
+| Number | Equipment                                            | Packed? |
+| ------ | ---------------------------------------------------- | ------- |
+| 2      | Portable nucleic acid preparation hood or equivalent |         |
+| 1      | 12V Vortex                                           |         |
+| 1      | 12V Centrifuge                                       |         |
+| 1      | 1mL pipette                                          |         |
+| 1      | 0.1mL pipette                                        |         |
+| 1      | 0.01mL pipette                                       |         |
+| 1      | 1.5mL/0.6mL convertible tube rack                    |         |
+| 1      | Qubit4 Fluorometer (ThermoFisher)                    |         |
+| 1      | mini16 PCR machine                                   |         |
+| 1      | Heat block                                           |         |
+| 1      | Magnetic rack                                        |         |
 
 #### Consumables required:
 
-
-   |---:|:---
-   || LunaScript RT 2x MasterMix
-   || Q5 Hotstart HF polymerase 2x Mastermix
-   || Norovirus 2Kb Primers V2
-   || NEBNext UltraII End-prep module
-   || NEBNext UltraII Ligase module
-   || AlineDX PCR Beads
-   || Nanopore Ligation Sequencing Kit 1D (SQK-LSK109)
-   || Nanopore Native Barcoding Expansion Kit
-   || Nanopore R9.4.1 Flow cells
-   || 1.5mL eppendorf tubes
-   || 0.2mL 8-strip tubes
-   || 50mL transfer tubes
-   || Qubit Reaction Tubes
-   || Qubit 1x dsDNA HS Assay kit
-   || Nuclease-free water
-   || 70% Ethanol
-   || 1mL pipette tips
-   || 0.1mL pipette tips
-   || 0.01mL pipette tips
-   || Paper towelling 
-   || Clinical waste sharps containers
-{: .compact}
+| Number           | Reagents/Consumable                              | Packed? |
+| ---------------- | ------------------------------------------------ | ------- |
+| 1                | LunaScript RT 2x MasterMix                       |         |
+| 1                | Q5 Hotstart HF polymerase 2x Mastermix           |         |
+| 1                | Norovirus 2Kb Primers V2                         |         |
+| 1                | NEBNext UltraII End-prep module                  |         |
+| 1                | NEBNext UltraII Ligase module                    |         |
+| 1                | AlineDX PCR Beads                                |         |
+| 1                | Nanopore Ligation Sequencing Kit 1D (SQK-LSK109) |         |
+| 1                | Nanopore Native Barcoding Expansion Kit          |         |
+| 1 per 24 samples | Nanopore R9.4.1 Flow cells                       |         |
+| 1                | 1.5mL eppendorf tubes                            |         |
+| 1                | 0.2mL 8-strip tubes                              |         |
+| 1                | 50mL transfer tubes                              |         |
+| 1                | Qubit reaction tubes                             |         |
+| 1                | Qubut 1x dsDNA HS Assay kit                      |         |
+| 1                | Nuclease-free water                              |         |
+| 1                | 70% Ethanol                                      |         |
+| 1                | 1mL pipette tips                                 |         |
+| 1                | 0.1mL pipette tips                               |         |
+| 1                | 0.01mL pipette tips                              |         |
+| 1                | Paper towelling                                  |         |
+| 1                | Clinical waste sharps containers                 |         |
 
 #### Safety, containment and contamination recommendations
 
-   |---:|:---
-   || Back-tie hydrophobic lab gown
-   || Gloves
-   || UV light sterilizers
-   || MediPal Decontamination wipes
-   || DNAway and RNAse Zap® reagent
-{: .compact}
+| Number | Reagents/Consumable           | Packed? |
+| ------ | ----------------------------- | ------- |
+| 1      | Back-tie hydrophobic lab gown |         |
+| 1      | Gloves                        |         |
+| 1      | UV light sterilizers          |         |
+| 1      | Medipal decontamination wipes |         |
+| 1      | DNAway reagent                |         |
+| 1      | RNAse Zap reagent             |         |
 
-<div class="pagebreak"> </div>
 ## Protocol
 
 ### Part 1: cDNA synthesis with Superscript IV Vilo cDNA kit
@@ -108,23 +101,26 @@ Ebola virus Nanopore sequencing kit-list:
 > **NOTE ON HOOD PREPARATION:** To prevent cross contamination of both the sample and other reagents, this should be carried out in the SAMPLE PREPARATION HOOD, which is pre-sterilised with UV and treated with MediPal wipes, DNAway and RNAseZap reagent. Wipe down the hood with each sequentially, allowing 5 minutes for drying between each. Pipettes should also be treated in the same way, and UV treated for 30 mins between library preparations. 
 
 1. Recommend aliquoting the Vilo mastermix, to prevent cross contamination and to reduce potential freeze/thaw cycles.
+
 2. Set up the following reaction:
 
-    |---|--- 
-    |5x LunaScript MM | 2&micro;L   
-    |viral RNA | 5&micro;L
-    |Water | 3&micro;L
-    |TOTAL | 10&micro;L
-    
+    | Reagent          | Temperature (°C) |
+    | ---------------- | ---------------- |
+    | 5x Lunascript MM | 2µL              |
+    | Viral RNA        | 5µL              |
+    | Water            | 3µL              |
+    | TOTAL            | 10µL             |
 > **NOTE:** Viral RNA input from a clinical sample should be between Ct 18-35. If Ct is between 12-15, then dilute the sample 100-fold in water, if between 15-18 then dilute 10-fold in water. This will reduce the likelihood of PCR-inhibition. 
 
 3. Gently mix (avoid vortexing) then pulse spin the tube to ensure maximum contact with the thermal cycler.
+
 4. Incubate the reaction as follows:
 
-    |---|---|--- 
-    | Primer annealing | 25&deg;C | 10 mins   
-    | Extension | 55&deg;C | 30 mins   
-    | Inactivation | 95&deg;C | 5 mins
+    | Step             | Temperature (°C) | Time    |
+    | ---------------- | ---------------- | ------- |
+    | Primer annealing | 25°C             | 10 mins |
+    | Extension        | 25°C             | 45 mins |
+    | Inactivation     | 25°C             | 5 mins  |
     
 5. cDNA is now ready for amplicon generation.
 
@@ -339,11 +335,12 @@ Ebola virus Nanopore sequencing kit-list:
 
 1. Set up the following end-prep reaction for each biological sample:
 
-   | DNA (100 ng) | 25&micro;L
-   | Ultra II End Prep Reaction Buffer | 3.5&micro;L
-   | Ultra II End Prep Enzyme Mix | 1.5&micro;L
-   | Total | 30&micro;L  
-   
+   | Reagent                          | Temperature (°C) |
+   | -------------------------------- | ---------------- |
+   | DNA (100ng)                      | 25µL             |
+   | UltraII End-prep reaction buffer | 3.5µL            |
+   | UltraII End-prep enzyme mix      | 1.5µL            |
+   | TOTAL                            | 30µL             |
 > **NOTE:** Amount of RNA can vary from 30-300ng, less than this and the coverage and depth may be sub-optimal. 
 
 2. Incubate at RT for <span style="color:red">5 mins</span> or <span style="color:blue">10 mins</span> then 65&deg;C for <span style="color:red">5 mins</span> or <span style="color:blue">10 mins</span>
@@ -352,10 +349,12 @@ Ebola virus Nanopore sequencing kit-list:
 
 4. Add the following directly to the previous reactions:
 
-    | NBXX barcode | 2.5&micro;L
-    | Ultra II Ligation Master Mix | 20&micro;L 
-    | Ligation Enhancer | 1&micro;L
-    | Total | 53.5&micro;L
+    | Reagent                     | Volume |
+    | --------------------------- | ------ |
+    | NBXX Barcode                | 2.5µL  |
+    | UltraII ligation master mix | 20µL   |
+    | UltraII ligation enhancer   | 1.0µL  |
+    | TOTAL                       | 53.5µL |
 
 > **NOTE:** Use a SINGLE barcode per biological sample. 
 
@@ -393,11 +392,13 @@ Ebola virus Nanopore sequencing kit-list:
 
 21. Set up the following adapter ligation reaction:
 
-    | Cleaned-up barcoded fragments (~50ng) | 30.0&micro;L
-    | AMII | 1.0&micro;L
-    | Ultra II Ligation module | 30.0&micro;L
-    | Ultra II Ligation enhancer | 1.0&micro;L
-    | Total volume | 62.0&micro;L
+    | Reagent                              | Volume |
+    | ------------------------------------ | ------ |
+    | Cleaned-up barcode fragments (~50ng) | 30µL   |
+    | AMII                                 | 1.0µL  |
+    | UltraII ligation module              | 30µL   |
+    | UltraII ligation enhancer            | 1.0µL  |
+    | TOTAL                                | 62µL   |
 
 22. Incubate at RT for <span style="color:red">10 mins</span> or <span style="color:blue">20 mins</span>.
 
@@ -464,13 +465,13 @@ Ebola virus Nanopore sequencing kit-list:
 
 9. In a new tube prepare the library dilution for sequencing:
 
-    | Reagent | Volume
-    |---|--- 
-    | SQB | 35&micro;L
-    | Nuclease-free water | 3.5&micro;L
-    | LLB | 25.5&micro;L
-    | Library | 11&micro;L
-    | Total | 75&micro;L 
+    | Reagent             | Volume |
+    | ------------------- | ------ |
+    | SQB                 | 35µL   |
+    | Nuclease-free water | 3.5µL  |
+    | LLB                 | 25.5µL |
+    | Library             | 11.0µL |
+    | TOTAL               | 75µL   |
 
 10. Gently lift the SpotON sample port cover to make the SpotON sample port accessible.
 
@@ -509,3 +510,7 @@ Ebola virus Nanopore sequencing kit-list:
 23. The MinKNOW Experiment page will indicate the progression of the script; this can be accessed through the `Experiment` tab that will appear at the top right of the screen
 
 24. Monitor messages in the Message panel in the MinKNOW GUI
+
+```
+
+```

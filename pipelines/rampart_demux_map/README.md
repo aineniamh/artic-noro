@@ -28,5 +28,10 @@ The config file can be in yaml or json format.
 You can either run this pipeline by editing the yaml file or by explicitly stating the config parameters on the command line. For example: 
 
 ```
-snakemake --snakefile pipelines/rampart_demux_map/Snakefile --config file_stem=fastq_runid_b10b0df343a0c44bc8f661f2cfbe235fce1fbedc_1 demuxedPath=pipeline_output referencePanelPath=rampart_config/norovirus/initial_record_set.fasta referenceConfigPath=rampart_config/norovirus/coordinate_reference.fasta basecalledPath=rampart_config/norovirus/data/basecalled
+snakemake --snakefile pipelines/rampart_demux_map/Snakefile \
+--config file_stem={fastq_file_stem} \
+outputPath=put/data/here \
+referencePanelPath=reference.fasta \
+referenceConfigPath=coordinate_reference.fasta \
+basecalledPath=path/to/data
 ```
