@@ -5,6 +5,7 @@ Resources to aid in sequencing norovirus in a clinical or field setting using na
 ## Table of contents
 
   * [Background](#background)
+  * [Protocol](protocol/Norovirus-2kb-Nanopore-sequencing-protocol.md)
   * [Pipeline details](#pipeline)
   * [Setup](#setup)
   * [Usage](#usage)
