@@ -1,5 +1,6 @@
 run_name: Noro2kb
 outputPath: pipeline_output
+readPath: validator_output/{reference}/simulated_sample/
 # referencePanelPath : path/to/references.fasta
 # primer_scheme_dir: primer-schemes
 # primer_scheme_version: noro2kb/V2

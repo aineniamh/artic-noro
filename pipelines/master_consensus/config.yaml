@@ -4,7 +4,7 @@ file_stem: fastq_runid_b10b0df343a0c44bc8f661f2cfbe235fce1fbedc_8 #the stem of t
 #Where is the data and where should it be put
 
 basecalledPath: "rampart_config/norovirus/data/basecalled" #where rampart will find the data
-outputPath: pipeline_master_test #where rampart will put the data
+outputPath: simulated_test #where rampart will put the data
 
 #For mapping
 referencePanelPath: rampart_config/norovirus/initial_record_set.fasta
