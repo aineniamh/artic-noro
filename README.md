@@ -2,6 +2,14 @@
 
 Resources to aid in sequencing norovirus in a clinical or field setting using nanopore technology. The bioinformatic pipeline was developed using [snakemake](https://snakemake.readthedocs.io/en/stable/). 
 
+## Table of contents
+
+  * [Background](#background)
+  * [Pipeline details](#pipeline)
+  * [Setup](#setup)
+  * [Usage](#usage)
+  * [References](#references)
+
 ## background
 
 Norovirus is a leading cause of acute gastroenteritis worldwide, directly costing health-care systems $4.2 billion annually (Bartsch et al., 2016). Infections are normally self-limiting, with symptoms resolving within 2-4 days, however viral shedding and infectivity may continue for weeks following ceasing of symptoms. Complications and chronic infection are common in the young, elderly and immunocompromised.
@@ -15,7 +23,7 @@ This pipeline is developed as part of a 'best-practices' protocol for clinical n
 
 <img src="https://github.com/aineniamh/artic-noro/blob/master/primer-schemes/noro2kb/V2/noro2kb.amplicons.poster.png">
 
-## bioinformatic pipeline details
+## pipeline
 
 This pipeline can be run independently as part of a stand-alone analysis or can be run as part of the RAMPART pipeline. 
 
@@ -70,7 +78,7 @@ To deactivate the environment, enter:
 ```bash
 conda deactivate
 ```
-## running the pipelines
+## usage
 
 ```bash
 snakemake --snakefile pipelines/master_demux/Snakefile.smk --config file_stem=your_file_here
