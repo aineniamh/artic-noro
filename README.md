@@ -23,7 +23,7 @@ This pipeline is developed as part of a 'best-practices' protocol for clinical n
 
 <img src="https://github.com/aineniamh/artic-noro/blob/master/primer-schemes/noro2kb/V2/noro2kb.amplicons.png">
 
-The respective lengths of each amplicon in the primer scheme are:
+The respective lengths of each amplicon in the primer scheme are shown below. The gold dots indicate the expected read lengths including the adaptor and barcodes, the dark blue dots indicate the actual length of the amplicon sequence.
 <img src="https://github.com/aineniamh/artic-noro/blob/master/primer-schemes/noro2kb/V2/noro2kb.amplicon_lengths.png">
 
 ## pipeline
@@ -39,11 +39,11 @@ The pipeline accepts basecalled (fastq) nanopore reads.
 2. Start ``RAMPART``. In the future, there will have a desktop application to do this, currently it is launched in the terminal, instructions can be found [here](https://github.com/artic-network/rampart).
 3. The server process of ``RAMPART`` watches the directory where the reads will be produced.
 4. This snakemake takes each file produced in real-time, demultiplexes (i.e. separates out the barcodes), and trims the fastq reads using [``porechop``](https://github.com/rambaut/Porechop), barcode labels are written to the header of each read. 
-5. Reads are mapped against a panel of references using [``minimap2``](https://github.com/lh3/minimap2) and the identity of the best hit is added to the read header or to a csv report. Other information, such as mapping coordinates and reference length are also reported (either in the read header or in a a csv report).
+5. Reads are mapped against a panel of references using [``minimap2``](https://github.com/lh3/minimap2) and the identity of the best hit is added to a csv report. Other information, such as mapping coordinates and reference length are also reported.
 6. This information is parsed by an internal ``RAMPART`` script and pushed to the front-end for vizualisation. For each sample, the depth of coverage is shown in real-time as the reads are being produced. 
 7. Once sufficient depth is achieved, the anaysis pipeline can be started by clicking in ``RAMPART``'s GUI or by calling ``snakemake`` on the command line (instructions below). 
 8. [``binlorry``](https://github.com/rambaut/binlorry) parses through the fastq files with barcode labels, pulling out the relevant reads and binning them into a single fastq file for that sample. It also applies a read-length filter, that you can customise in the GUI, and can filter by reference match, in cases of mixed-samples.
-9. Specifically for norovirus, a process determines how many analyses to run per sample. Based on mapping coordinates, each read is designated as likely 'orf1' or 'orf2/3', which is the most common recombination point. The process checks whether there are multiple different virus genotypes within that sample and determines the number of parallel analyses that will be needed (one per type of virus). 
+9. A process determines how many analyses to run per sample. Based on mapping coordinates, each read is designated as likely 'orf1' or 'orf2/3', which is the most common recombination point. The process checks whether there are multiple different virus genotypes within that sample and determines the number of parallel analyses that will be needed (one per type of virus). 
 10. The barcode fastq is then subsetted (binned again using ``binlorry``) by genotype and open reading frame ('orf1' or 'orf2/3'). 
 11. [``racon``](https://github.com/isovic/racon) and [``minimap2``](https://github.com/lh3/minimap2) are run iteratively four times against the fastq reads and then a final polishing consensus-generation step is performed using [``medaka``](https://github.com/nanoporetech/medaka). 
 12. A markdown report is generated, summarising the viral profile of each sample. 
