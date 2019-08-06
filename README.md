@@ -21,8 +21,10 @@ We aim to produce an end-to-end system that can provide real-time access to geno
 
 This pipeline is developed as part of a 'best-practices' protocol for clinical nanopore sequencing of norovirus. The complementary upstream extraction, amplification, library prep and sequencing protocol can be found [here](protocol/Norovirus-2kb-Nanopore-sequencing-protocol.md) (Luke Meredith). A tiled amplicon approach is currently being tested by Paola Resende with 2kb primers developed using [Primal Scheme](http://primal.zibraproject.org/) (Luke Meredith). Amplicons produced by the scheme, spanning the genome, are shown in the figure below. To cover the diversity of norovirus, multiple primer schemes were created with different sets of reference sequences from GenBank. 
 
+<img src="https://github.com/aineniamh/artic-noro/blob/master/primer-schemes/noro2kb/V2/noro2kb.amplicons.png">
 
-<img src="https://github.com/aineniamh/artic-noro/blob/master/primer-schemes/noro2kb/V2/noro2kb.amplicons.poster.png">
+The respective lengths of each amplicon in the primer scheme are:
+<img src="https://github.com/aineniamh/artic-noro/blob/master/primer-schemes/noro2kb/V2/noro2kb.amplicon_lengths.png">
 
 ## pipeline
 
