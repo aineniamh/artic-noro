@@ -142,11 +142,11 @@ Ebola virus Nanopore sequencing kit-list:
 5. Dilute this primer pool 1:10 in molecular grade water, to generate 10&micro;M primer stocks. Recommend that at least 1mL of each primer pool is taken in 100&micro;L aliquots, to account for any risks of degradation of contamination. 
 
 <div class="pagebreak"> </div>
-|ref                      |amp_name|start|end |lprimer             |rprimer              |lseq                          |rseq                          |length|pool|
-|-------------------------|--------|-----|----|--------------------|---------------------|------------------------------|------------------------------|------|----|
-|LC209450.1&#124;GII.P16_GII.2 |Amp1    |29   |1990|gii2noro_1_LEFT     |gii2noro_5_RIGHT     |TGCTTGCAACAACAACAACGAC        |CATGTGGGGTGTTGCCATTCTT        |1961  |1   |
-|LC209450.1&#124;GII.P16_GII.2 |Amp2    |1540 |3690|gii2noro_5_LEFT     |gii2noro_10_RIGHT    |TCACAGGAGATCAAAGAGTTGGACT     |GTAGGCAGGCTCATATGTCCCT        |2150  |2   |
-|LC209450.1&#124;GII.P16_GII.2 |Amp3    |2900 |5104|gii2noro_9_LEFT     |gii2noro_14_RIGHT    |AGTGACTGGTTCGGAAATCAGAAA      |AGTAGATGGAGCGGCGTCATTC        |2204  |1   |
+    |ref                      |amp_name|start|end |lprimer             |rprimer              |lseq                          |rseq                          |length|pool|
+    |-------------------------|--------|-----|----|--------------------|---------------------|------------------------------|------------------------------|------|----|
+    |LC209450.1&#124;GII.P16_GII.2 |Amp1    |29   |1990|gii2noro_1_LEFT     |gii2noro_5_RIGHT     |TGCTTGCAACAACAACAACGAC        |CATGTGGGGTGTTGCCATTCTT        |1961  |1   |
+    |LC209450.1&#124;GII.P16_GII.2 |Amp2    |1540 |3690|gii2noro_5_LEFT     |gii2noro_10_RIGHT    |TCACAGGAGATCAAAGAGTTGGACT     |GTAGGCAGGCTCATATGTCCCT        |2150  |2   |
+    |LC209450.1&#124;GII.P16_GII.2 |Amp3    |2900 |5104|gii2noro_9_LEFT     |gii2noro_14_RIGHT    |AGTGACTGGTTCGGAAATCAGAAA      |AGTAGATGGAGCGGCGTCATTC        |2204  |1   |
 |LC209450.1&#124;GII.P16_GII.2 |Amp4    |4290 |6568|gii2noro_13_LEFT    |gii2noro_18_RIGHT    |TGGGACTCAACACAACAGAGGG        |TGTCATGAAACCAGCTCTGTGG        |2278  |2   |
 |LC209450.1&#124;GII.P16_GII.2 |Amp5    |5697 |7494|gii2noro_17_LEFT    |gii2noro_21_RIGHT    |TGATTTCACATATCTGGTGCCACC      |TAAATTTTCACCTTTTCACTAAACCTGTGA|1797  |1   |
 |KC597140.1&#124;GII.3         |Amp1    |0    |2258|gii3noro_1_LEFT     |gii3noro_5_RIGHT     |ACCGCAAAATCTTCAAGTGACAGA      |CCCTTGCCATCAGACTCAAGTG        |2258  |1   |
